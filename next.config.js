@@ -1,8 +1,9 @@
-﻿const createMDX = require("@next/mdx");
+const createMDX = require("@next/mdx");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
+  typedRoutes: true,
   images: {
     remotePatterns: [
       {
@@ -14,9 +15,6 @@ const nextConfig = {
         hostname: "source.unsplash.com"
       }
     ]
-  },
-  experimental: {
-    typedRoutes: true
   },
   pageExtensions: ["ts", "tsx", "js", "jsx", "mdx"]
 };
