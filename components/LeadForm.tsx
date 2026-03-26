@@ -1,6 +1,8 @@
 "use client";
 
+import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { BubbleCard } from "./BubbleCard";
 import { Button } from "./ui/Button";
 
@@ -12,14 +14,51 @@ type LeadFormProps = {
 };
 
 export function LeadForm({ city = "", state = "", compact = false, className = "" }: LeadFormProps) {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    const formData = new FormData(event.currentTarget);
+    const body = new URLSearchParams();
+
+    formData.forEach((value, key) => {
+      if (typeof value === "string") {
+        body.append(key, value);
+      }
+    });
+
+    try {
+      const response = await fetch("/__forms.html", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: body.toString()
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      router.push("/thanks");
+    } catch {
+      setSubmitError("We could not send your request right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <BubbleCard
       as="form"
       name="local-help-request"
       method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/thanks"
+      onSubmit={handleSubmit}
       className={`space-y-3 p-5 ${compact ? "sm:p-5" : "sm:p-6"} ${className}`}
       aria-label="Request local real estate help"
     >
@@ -113,9 +152,15 @@ export function LeadForm({ city = "", state = "", compact = false, className = "
         />
       </div>
 
-      <Button type="submit" className="w-full sm:w-auto">
-        Send request
+      <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
+        {isSubmitting ? "Sending..." : "Send request"}
       </Button>
+
+      {submitError ? (
+        <p className="text-xs text-red-200" role="alert">
+          {submitError}
+        </p>
+      ) : null}
 
       <p className="text-[11px] text-brand-text/75">
         By submitting, you agree to our{" "}
