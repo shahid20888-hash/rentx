@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rx-bg-1: #0e2a23;
+  --rx-bg-2: #123c33;
+  --rx-bg-3: #0b1f1a;
+  --rx-copper: #c78b5e;
+  --rx-copper-hover: #b8734c;
+  --rx-copper-soft: #d29a6a;
+}
+
+html,
+body {
+  @apply bg-brand-bg text-brand-text antialiased text-base leading-7;
+  background-image: linear-gradient(165deg, var(--rx-bg-1) 0%, var(--rx-bg-2) 48%, var(--rx-bg-3) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body {
+  @apply min-h-screen;
+}
+
+div.min-h-screen.bg-brand-bg {
+  background-image: linear-gradient(165deg, var(--rx-bg-1) 0%, var(--rx-bg-2) 48%, var(--rx-bg-3) 100%);
+}
+
+header.sticky {
+  background-color: #0b1f1a !important;
+}
+
+header.sticky nav[aria-label="Primary"] a {
+  color: #f5f5f5;
+}
+
+header.sticky nav[aria-label="Primary"] a:hover {
+  color: var(--rx-copper);
+}
+
+header.sticky nav[aria-label="Primary"] a.bg-brand-hover {
+  color: var(--rx-copper-soft);
+}
+
+footer {
+  background-color: #0b1f1a !important;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+footer a:hover {
+  color: var(--rx-copper-soft) !important;
+}
+
+form[aria-label="Search by city or state"] {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+form[aria-label="Search by city or state"] button {
+  background: var(--rx-copper) !important;
+  color: #0e2a23 !important;
+}
+
+form[aria-label="Search by city or state"] button:hover {
+  background: var(--rx-copper-hover) !important;
+}
+
+.bubble-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+a {
+  @apply text-brand-text transition-colors hover:text-brand-accent hover:underline underline-offset-4;
+}
+
+main {
+  @apply flex-1;
+}
+
+.mdx-prose {
+  @apply max-w-3xl text-[1rem] leading-8 text-brand-text/90;
+}
+
+.mdx-prose h1,
+.mdx-prose h2,
+.mdx-prose h3,
+.mdx-prose h4 {
+  @apply scroll-mt-24 font-semibold tracking-tight text-brand-text;
+}
+
+.mdx-prose h1 {
+  @apply mt-0 text-3xl leading-tight;
+}
+
+.mdx-prose h2 {
+  @apply mt-10 text-2xl leading-tight;
+}
+
+.mdx-prose h3 {
+  @apply mt-8 text-xl leading-tight;
+}
+
+.mdx-prose p {
+  @apply my-4 text-brand-text/90;
+}
+
+.mdx-prose ul,
+.mdx-prose ol {
+  @apply my-4 pl-6;
+}
+
+.mdx-prose li {
+  @apply my-1.5;
+}
+
+.mdx-prose strong {
+  @apply font-semibold text-brand-text;
+}
+
+.mdx-prose a {
+  @apply font-medium text-brand-text underline decoration-brand-muted underline-offset-4 hover:text-brand-text;
+}
+
+.mdx-prose blockquote {
+  @apply my-6 border-l-4 border-brand-border bg-brand-hover py-3 pl-4 pr-4 italic text-brand-text/90;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.08) inset !important;
+  -webkit-text-fill-color: #f5f5f5 !important;
+  caret-color: #f5f5f5 !important;
+}
+
+/* Global dropdown/select theming for dark emerald UI */
+select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f5f7f6 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color-scheme: dark;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20'%3E%3Cpath fill='%23F5F7F6' d='M5.5 7.5 10 12l4.5-4.5 1.5 1.5-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.25rem;
+}
+
+select:focus {
+  border-color: rgba(199, 139, 94, 0.7) !important;
+  box-shadow: 0 0 0 2px rgba(199, 139, 94, 0.35) !important;
+}
+
+select option {
+  background: #0f2e25 !important;
+  color: #f5f7f6 !important;
+}
+
+select option:hover,
+select option:focus {
+  background: rgba(199, 139, 94, 0.15) !important;
+}
+
+select option:checked {
+  background: rgba(199, 139, 94, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* Common custom dropdown containers for future components */
+.dropdown-content,
+.popover-content,
+.menu,
+.listbox-options,
+[data-radix-select-content],
+[role="listbox"] {
+  background: linear-gradient(145deg, #0f2e25, #123a30) !important;
+  color: #f5f7f6 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
