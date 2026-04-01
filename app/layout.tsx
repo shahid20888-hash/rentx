@@ -35,7 +35,7 @@ export default function RootLayout({
         />
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-PASTE-MY-REAL-ID-HERE"
+          src="https://www.googletagmanager.com/gtag/js?id=G-J6HMYCTGCW"
         />
         <script
           dangerouslySetInnerHTML={{
@@ -43,7 +43,7 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-PASTE-MY-REAL-ID-HERE');
+              gtag('config', 'G-J6HMYCTGCW');
             `
           }}
         />
@@ -64,3 +64,4 @@ export default function RootLayout({
     </html>
   );
 }
+
