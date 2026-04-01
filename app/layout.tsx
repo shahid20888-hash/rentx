@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import "../styles/globals.css";
 import { defaultMetadata } from "@/lib/seo";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
@@ -29,14 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3635656048122177"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="font-sans bg-brand-bg text-brand-text" suppressHydrationWarning>
         <script
@@ -54,4 +50,3 @@ export default function RootLayout({
     </html>
   );
 }
-
