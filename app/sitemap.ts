@@ -1,70 +1,98 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/seo";
-import { getStates, getCities } from "@/lib/data";
+import { getCities, getStates } from "@/lib/data";
 import { GUIDES } from "@/lib/guides";
 import { INSIGHTS } from "@/lib/insights";
 
+const BASE_URL = "https://rentx.us";
+const NOW = new Date();
+
+type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
+
+type SitemapEntryOptions = {
+  changeFrequency: ChangeFrequency;
+  lastModified?: Date;
+  priority: number;
+};
+
+function buildUrl(path: string) {
+  return new URL(path, BASE_URL).toString();
+}
+
+function buildEntry(path: string, options: SitemapEntryOptions): MetadataRoute.Sitemap[number] {
+  return {
+    url: buildUrl(path),
+    lastModified: options.lastModified ?? NOW,
+    changeFrequency: options.changeFrequency,
+    priority: options.priority
+  };
+}
+
+function resolveArticleDate(updatedAt?: string, publishedAt?: string, date?: string) {
+  return new Date(updatedAt ?? publishedAt ?? date ?? NOW.toISOString());
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = SITE_URL.replace(/\/$/, "");
-  const now = new Date();
+  const staticEntries: MetadataRoute.Sitemap = [
+    buildEntry("/", { changeFrequency: "daily", priority: 1 }),
+    buildEntry("/states/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/cities/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/guides/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/insights/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/compare/", { changeFrequency: "weekly", priority: 0.8 }),
+    buildEntry("/find-a-pro/", { changeFrequency: "weekly", priority: 0.7 }),
+    buildEntry("/about/", { changeFrequency: "monthly", priority: 0.5 }),
+    buildEntry("/contact/", { changeFrequency: "monthly", priority: 0.4 }),
+    buildEntry("/privacy-policy/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/terms/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/disclaimer/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/editorial-policy/", { changeFrequency: "monthly", priority: 0.4 }),
+    buildEntry("/cookie-policy/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/dmca/", { changeFrequency: "yearly", priority: 0.2 })
+  ];
 
-  const staticPages: MetadataRoute.Sitemap = [
-    "",
-    "/states/",
-    "/cities/",
-    "/guides/",
-    "/insights/",
-    "/compare/",
-    "/find-a-pro/",
-    "/about/",
-    "/contact/",
-    "/privacy-policy/",
-    "/terms/",
-    "/disclaimer/",
-    "/editorial-policy/",
-    "/cookie-policy/",
-    "/dmca/",
-    "/thanks/"
-  ].map((path) => ({
-    url: `${baseUrl}${path || "/"}`,
-    lastModified: now
-  }));
+  const stateEntries = getStates().map((state) =>
+    buildEntry(`/state/${state.slug}/`, {
+      changeFrequency: "weekly",
+      priority: 0.8
+    })
+  );
 
-  const stateEntries = getStates().map((state) => ({
-    url: `${baseUrl}/state/${state.slug}/`,
-    lastModified: now
-  }));
+  const cityEntries = getCities().map((city) =>
+    buildEntry(`/city/${city.slug}/`, {
+      changeFrequency: "weekly",
+      priority: 0.8
+    })
+  );
 
-  const cityEntries = getCities().map((city) => ({
-    url: `${baseUrl}/city/${city.slug}/`,
-    lastModified: now
-  }));
+  const guideEntries = GUIDES.map((guide) =>
+    buildEntry(`/guides/${guide.slug}/`, {
+      lastModified: resolveArticleDate(guide.meta.updatedAt, guide.meta.publishedAt, guide.meta.date),
+      changeFrequency: "monthly",
+      priority: 0.85
+    })
+  );
 
-  const guideEntries = GUIDES.map((guide) => ({
-    url: `${baseUrl}/guides/${guide.slug}/`,
-    lastModified: new Date(guide.meta.date)
-  }));
+  const insightEntries = INSIGHTS.map((insight) =>
+    buildEntry(`/insights/${insight.slug}/`, {
+      lastModified: resolveArticleDate(insight.meta.updatedAt, insight.meta.publishedAt, insight.meta.date),
+      changeFrequency: "monthly",
+      priority: 0.85
+    })
+  );
 
-  const insightEntries = INSIGHTS.map((insight) => ({
-    url: `${baseUrl}/insights/${insight.slug}/`,
-    lastModified: new Date(insight.meta.date)
-  }));
-
-  const compareEntries = getCities()
-    .slice(0, 6)
-    .flatMap((city, index, list) => {
-      const next = list[index + 1];
-      if (!next) return [];
-      return [
-        {
-          url: `${baseUrl}/compare/${city.slug}-vs-${next.slug}/`,
-          lastModified: now
-        }
-      ];
-    });
+  const compareEntries = getCities().flatMap((city) =>
+    getCities()
+      .filter((other) => other.slug !== city.slug)
+      .map((other) =>
+        buildEntry(`/compare/${city.slug}-vs-${other.slug}/`, {
+          changeFrequency: "weekly",
+          priority: 0.6
+        })
+      )
+  );
 
   return [
-    ...staticPages,
+    ...staticEntries,
     ...stateEntries,
     ...cityEntries,
     ...guideEntries,
@@ -72,4 +100,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...compareEntries
   ];
 }
-
