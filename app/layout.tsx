@@ -12,8 +12,17 @@ const inter = Inter({
 export const metadata: Metadata = {
   ...defaultMetadata,
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png"
+    icon: "/apple-touch-icon.png",
+    shortcut: "/apple-touch-icon.png",
+    apple: "/apple-touch-icon.png",
+    other: [
+      {
+        rel: "icon",
+        url: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png"
+      }
+    ]
   }
 };
 
@@ -64,4 +73,3 @@ export default function RootLayout({
     </html>
   );
 }
-
