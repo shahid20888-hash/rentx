@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Container } from "./Container";
-import { SearchBar } from "./SearchBar";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -22,13 +21,12 @@ const navItems = [
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <header className="sticky top-0 z-40 border-b border-brand-border bg-brand-surface text-brand-text backdrop-blur-md">
       <Container className="py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-4 xl:gap-6">
           <Link
             href="/"
             className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-[0.85]"
@@ -44,16 +42,15 @@ export function Header() {
             />
             <div className="flex flex-col">
               <span className="text-sm font-semibold tracking-tight text-brand-text sm:text-base">RentX</span>
-              <span className="hidden text-xs text-brand-muted sm:inline">rentx.us</span>
             </div>
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-4 text-sm lg:flex">
+          <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-2 text-sm lg:flex xl:gap-3">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-full px-2.5 py-1.5 underline-offset-4 transition ${
+                className={`rounded-full px-2 py-1.5 text-[13px] font-medium underline-offset-4 transition xl:px-2.5 ${
                   isActive(item.href)
                     ? "bg-brand-hover text-brand-text"
                     : "text-brand-muted hover:bg-brand-hover hover:text-brand-text hover:underline"
@@ -64,20 +61,7 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden w-72 xl:w-80 xl:block">
-            <SearchBar variant="dark" />
-          </div>
-
           <div className="flex items-center gap-2 lg:hidden">
-            <button
-              type="button"
-              onClick={() => setMobileSearchOpen((open) => !open)}
-              className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-[#C78B5E] px-5 py-2.5 text-sm font-semibold text-[#0E2A23] shadow-[0_6px_20px_rgba(199,139,94,0.25)] transition hover:bg-[#B8734C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C78B5E]/40"
-              aria-expanded={mobileSearchOpen}
-              aria-controls="mobile-search"
-            >
-              Search
-            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen((open) => !open)}
@@ -114,12 +98,6 @@ export function Header() {
               Contact Us
             </Link>
           </div>
-
-          {mobileSearchOpen && (
-            <div id="mobile-search" className="mt-3">
-              <SearchBar variant="dark" />
-            </div>
-          )}
 
           {mobileMenuOpen && (
             <nav id="mobile-nav" aria-label="Mobile primary" className="mt-3 space-y-1 rounded-3xl border border-brand-border bg-brand-surface p-3">
