@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import type { Metadata } from "next";
 import { getCities, getStates } from "@/lib/data";
 import { getLatestGuides } from "@/lib/guides";
@@ -25,9 +26,17 @@ export default function HomePage() {
   const popularStates = states.slice(0, 12);
   const latestGuides = getLatestGuides(3);
   const seoLongform = getStaticSeoLongformContent("home");
+  const lastUpdated = "April 27, 2026";
 
   return (
     <div className="space-y-10">
+      <Script
+        id="adsense-homepage-loader"
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3635656048122177"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
       <BubbleCard as="section" className="space-y-6 px-5 py-10 sm:px-8">
         <div className="space-y-6">
           <div className="space-y-3">
@@ -36,6 +45,11 @@ export default function HomePage() {
             </h1>
             <p className="max-w-2xl text-sm">
               RentX provides clear cost-of-living comparisons for cities and states, so you can plan moves and budgets with confidence.
+            </p>
+            <p className="text-xs text-brand-muted">
+              Last updated: {lastUpdated}. Read our{" "}
+              <Link href="/editorial-policy" className="underline hover:text-brand-text">Editorial Policy</Link>{" "}
+              and <Link href="/disclaimer" className="underline hover:text-brand-text">Disclaimer</Link>.
             </p>
           </div>
           <div className="max-w-xl"><SearchBar /></div>
@@ -88,6 +102,24 @@ export default function HomePage() {
       </section>
 
       <CompareWidget cities={cities} />
+
+      <section aria-label="Sponsored content area" className="space-y-2">
+        <h2 className="text-sm font-semibold">Advertisement</h2>
+        <p className="text-xs text-brand-muted">
+          Ads help support independent research content. We keep ad placements limited for a better reading experience.
+        </p>
+        <ins
+          className="adsbygoogle block min-h-[120px] w-full overflow-hidden rounded-2xl border border-brand-border bg-brand-surface p-3"
+          style={{ display: "block" }}
+          data-ad-client="ca-pub-3635656048122177"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+        <Script id="adsense-homepage-init" strategy="afterInteractive">
+          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
+        </Script>
+      </section>
 
       <section aria-label="Latest guides" className="space-y-4">
         <div className="flex items-center justify-between gap-2">

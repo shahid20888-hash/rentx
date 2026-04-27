@@ -47,7 +47,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     buildEntry("/disclaimer/", { changeFrequency: "yearly", priority: 0.2 }),
     buildEntry("/editorial-policy/", { changeFrequency: "monthly", priority: 0.4 }),
     buildEntry("/cookie-policy/", { changeFrequency: "yearly", priority: 0.2 }),
-    buildEntry("/dmca/", { changeFrequency: "yearly", priority: 0.2 })
+    buildEntry("/dmca/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/advertising-disclosure/", { changeFrequency: "yearly", priority: 0.2 })
   ];
 
   const stateEntries = getStates().map((state) =>

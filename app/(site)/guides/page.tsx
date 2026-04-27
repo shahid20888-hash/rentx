@@ -16,11 +16,16 @@ export const metadata: Metadata = buildMetadata({
 export default function GuidesPage() {
   const guides = [...GUIDES].sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
   const seoLongform = getStaticSeoLongformContent("guides");
+  const lastUpdated = "April 27, 2026";
 
   return (
     <div className="space-y-6">
       <BubbleCard as="header" className="space-y-3 p-6">
         <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">Cost of living guides</h1>
+        <p className="max-w-2xl text-sm">
+          Practical, plain-language guides designed to help readers evaluate relocation costs and avoid common budgeting mistakes.
+        </p>
+        <p className="text-xs text-brand-muted">Last updated: {lastUpdated}</p>
       </BubbleCard>
 
       <section aria-label="Guides" className="grid gap-4 md:grid-cols-3">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
@@ -12,28 +13,54 @@ export const metadata: Metadata = buildMetadata({
 
 export default function AboutPage() {
   const seoLongform = getStaticSeoLongformContent("about");
+  const lastUpdated = "April 27, 2026";
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <BubbleCard as="header" className="space-y-3 p-6">
         <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">About RentX</h1>
-        <p className="max-w-2xl text-sm">
-          RentX is an independent informational website focused on helping people understand and compare cost-of-living patterns across the United States.
+        <p className="max-w-3xl text-sm">
+          RentX is an independent digital publication focused on U.S. cost-of-living research, relocation planning, and practical budgeting insights.
         </p>
+        <p className="text-xs text-brand-muted">Last updated: {lastUpdated}</p>
       </BubbleCard>
-      <BubbleCard as="section" className="space-y-3 p-6 text-sm">
-        <p>
-          We publish city and state pages, comparisons, and long-form articles that explain housing, utilities, groceries, transportation, and related costs in plain language.
-        </p>
-        <p>
-          Our data and estimates are used at a high level for research and educational purposes. We provide directional guidance, not personalized financial or legal advice.
-        </p>
-        <p>
-          Editorial standards include clarity, neutrality, regular updates, and correction handling when readers report factual issues.
-        </p>
-        <p>
-          For support, correction requests, or general feedback, contact <a href="mailto:support@rentx.us">support@rentx.us</a>.
-        </p>
+
+      <BubbleCard as="section" className="space-y-5 p-6 text-sm">
+        <section className="space-y-2">
+          <h2 className="text-base font-semibold">Who We Are</h2>
+          <p>
+            Our mission is to help readers compare cities and states with transparent information instead of marketing hype. We publish independent content for students, renters, families, and professionals evaluating where to live.
+          </p>
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="text-base font-semibold">What We Publish</h2>
+          <h3 className="text-sm font-semibold text-brand-muted">Mission and vision</h3>
+          <p>
+            Our mission is to make relocation decisions less stressful through understandable cost-of-living analysis. Our vision is a transparent, user-first platform where people can compare places confidently.
+          </p>
+          <h3 className="text-sm font-semibold text-brand-muted">Core coverage</h3>
+          <p>
+            RentX covers housing, transportation, groceries, utilities, healthcare, and lifestyle expenses through city profiles, state overviews, comparisons, and editorial guides.
+          </p>
+          <h3 className="text-sm font-semibold text-brand-muted">Editorial standards</h3>
+          <p>
+            We apply documented editorial practices for sourcing, updates, and corrections. Read our{" "}
+            <Link className="underline hover:text-brand-text" href="/editorial-policy">Editorial Policy</Link> for details.
+          </p>
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="text-base font-semibold">Ownership and Transparency</h2>
+          <p>
+            RentX operates as an independent informational website. We may use advertising to support operations, but paid relationships do not control editorial conclusions.
+          </p>
+          <p>
+            For support, partnership inquiries, or corrections, contact{" "}
+            <a className="underline hover:text-brand-text" href="mailto:support@rentx.us">support@rentx.us</a> or use our{" "}
+            <Link className="underline hover:text-brand-text" href="/contact">Contact page</Link>.
+          </p>
+        </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
     </div>

@@ -9,13 +9,14 @@ import { SearchBar } from "./SearchBar";
 
 const navItems = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact Us" },
   { href: "/states", label: "States" },
   { href: "/cities", label: "Cities" },
   { href: "/compare", label: "Compare" },
   { href: "/guides", label: "Guides" },
   { href: "/insights", label: "Insights" },
-  { href: "/find-a-pro", label: "Find a Pro" },
-  { href: "/contact", label: "Contact" }
+  { href: "/find-a-pro", label: "Find a Pro" }
 ] as const;
 
 export function Header() {
@@ -63,7 +64,7 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden w-72 xl:w-80 lg:block">
+          <div className="hidden w-72 xl:w-80 xl:block">
             <SearchBar variant="dark" />
           </div>
 
@@ -91,6 +92,29 @@ export function Header() {
         </div>
 
         <div className="lg:hidden">
+          <div className="mt-3 flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/about"
+              className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                isActive("/about")
+                  ? "bg-brand-hover text-brand-text"
+                  : "border border-brand-border text-brand-muted hover:bg-brand-hover hover:text-brand-text"
+              }`}
+            >
+              About Us
+            </Link>
+            <Link
+              href="/contact"
+              className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                isActive("/contact")
+                  ? "bg-brand-hover text-brand-text"
+                  : "border border-brand-border text-brand-muted hover:bg-brand-hover hover:text-brand-text"
+              }`}
+            >
+              Contact Us
+            </Link>
+          </div>
+
           {mobileSearchOpen && (
             <div id="mobile-search" className="mt-3">
               <SearchBar variant="dark" />

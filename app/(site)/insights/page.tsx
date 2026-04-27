@@ -16,12 +16,16 @@ export const metadata: Metadata = buildMetadata({
 export default function InsightsPage() {
   const insights = [...INSIGHTS].sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
   const seoLongform = getStaticSeoLongformContent("insights");
+  const lastUpdated = "April 27, 2026";
 
   return (
     <div className="space-y-6">
       <BubbleCard as="header" className="space-y-3 p-6">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">RentX Insights</h1>
-        <p className="max-w-2xl text-sm">Research-backed cost of living insights.</p>
+        <p className="max-w-2xl text-sm">
+          Research-backed analysis focused on U.S. affordability trends, relocation planning, and transparent methodology notes.
+        </p>
+        <p className="text-xs text-brand-muted">Last updated: {lastUpdated}</p>
       </BubbleCard>
 
       <section className="grid gap-4 md:grid-cols-2">

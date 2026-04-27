@@ -4,11 +4,18 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { primaryButtonClass } from "@/components/ui/Button";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Thank You",
-  description: "Thank you for reaching out to RentX.",
-  path: "/thanks/"
-});
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: "Thank You",
+    description: "Thank you for reaching out to RentX.",
+    path: "/thanks/"
+  }),
+  // Utility confirmation page; keep out of search results.
+  robots: {
+    index: false,
+    follow: false
+  }
+};
 
 export default function ThanksPage() {
   return (
@@ -19,7 +26,8 @@ export default function ThanksPage() {
           We received your message. If you shared contact details, we will follow up as soon as we can.
         </p>
       </BubbleCard>
-      <BubbleCard as="section" className="space-y-3 p-6 text-sm">
+      <BubbleCard as="section" className="space-y-4 p-6 text-sm">
+        <h2 className="text-base font-semibold">What Happens Next</h2>
         <p>
           In the meantime, you can continue exploring cost-of-living information across US cities and states, or read our short guides on budgeting and planning a move.
         </p>
