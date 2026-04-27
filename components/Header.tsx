@@ -8,14 +8,14 @@ import { Container } from "./Container";
 
 const navItems = [
   { href: "/", label: "Home" },
+  { href: "/find-a-pro", label: "Find a Pro" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
   { href: "/states", label: "States" },
   { href: "/cities", label: "Cities" },
   { href: "/compare", label: "Compare" },
   { href: "/guides", label: "Guides" },
-  { href: "/insights", label: "Insights" },
-  { href: "/find-a-pro", label: "Find a Pro" }
+  { href: "/insights", label: "Insights" }
 ] as const;
 
 export function Header() {
@@ -45,12 +45,12 @@ export function Header() {
             </div>
           </Link>
 
-          <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-2 text-sm lg:flex xl:gap-3">
+          <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-2 text-sm lg:flex xl:gap-2.5">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-full px-2 py-1.5 text-[13px] font-medium underline-offset-4 transition xl:px-2.5 ${
+                className={`whitespace-nowrap rounded-full px-2.5 py-1.5 text-[14px] font-semibold underline-offset-4 transition xl:px-3 ${
                   isActive(item.href)
                     ? "bg-brand-hover text-brand-text"
                     : "text-brand-muted hover:bg-brand-hover hover:text-brand-text hover:underline"
