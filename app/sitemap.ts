@@ -77,7 +77,8 @@ export async function generateSitemaps() {
 }
 
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
-  if (id === 0) {
+  const numericId = Number(id);
+  if (numericId === 0) {
     // Partition 0: Core Content Sitemaps
     const staticEntries: MetadataRoute.Sitemap = [
       buildEntry("/", { changeFrequency: "daily", priority: 1 }),
@@ -138,7 +139,7 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
   } else {
     // Partition 1+: Compare Pages Sitemaps
     const comparePairs = getQualityComparePairs();
-    const startIndex = (id - 1) * SITEMAP_MAX_SIZE;
+    const startIndex = (numericId - 1) * SITEMAP_MAX_SIZE;
     const endIndex = startIndex + SITEMAP_MAX_SIZE;
     const chunk = comparePairs.slice(startIndex, endIndex);
 
