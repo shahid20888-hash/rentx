@@ -55,8 +55,8 @@ export default function PrivacyPolicyPage() {
             RentX displays third-party advertisements served by networks like Google AdSense. Google and other third-party vendors use cookies to serve targeted ads based on your prior visits to our site or other websites. You may manage these tracking preferences or opt out of personalized advertising by visiting Google's Ads Settings. We also store user-submitted information (such as names, emails, and locations provided on our contact and relocation lead forms) solely to respond to your specific requests and do not sell this personal data to third parties.
           </p>
           <p>
-            For cookie details, review our <Link className="underline hover:text-brand-text" href="/cookie-policy">Cookie Policy</Link>. For ad and content standards, see our{" "}
-            <Link className="underline hover:text-brand-text" href="/editorial-policy">Editorial Policy</Link>.
+            For cookie details, review our <Link className="underline hover:text-brand-text" href={"/cookie-policy/" as any}>Cookie Policy</Link>. For ad and content standards, see our{" "}
+            <Link className="underline hover:text-brand-text" href={"/editorial-policy/" as any}>Editorial Policy</Link>.
           </p>
         </section>
 

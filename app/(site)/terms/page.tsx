@@ -31,7 +31,7 @@ export default function TermsPage() {
           <h2 className="text-base font-semibold">Acceptance of Terms</h2>
           <p>
             By using this website, you agree to follow these terms, our{" "}
-            <Link className="underline hover:text-brand-text" href="/privacy-policy">Privacy Policy</Link>, and related legal pages.
+            <Link className="underline hover:text-brand-text" href={"/privacy-policy/" as any}>Privacy Policy</Link>, and related legal pages.
           </p>
         </section>
 

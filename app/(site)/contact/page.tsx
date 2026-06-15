@@ -81,9 +81,9 @@ export default function ContactPage() {
               <h3 className="text-sm font-bold uppercase tracking-wider text-brand-accent font-semibold">Helpful links</h3>
             </div>
             <p className="text-xs text-brand-muted/85 leading-relaxed">
-              Review our <Link className="underline hover:text-brand-accent text-brand-text font-medium" href="/about">About Us</Link>,{" "}
-              <Link className="underline hover:text-brand-accent text-brand-text font-medium" href="/privacy-policy">Privacy Policy</Link>, and{" "}
-              <Link className="underline hover:text-brand-accent text-brand-text font-medium" href="/terms">Terms &amp; Conditions</Link> before submitting legal or privacy-related requests.
+              Review our <Link className="underline hover:text-brand-accent text-brand-text font-medium" href={"/about/" as any}>About Us</Link>,{" "}
+              <Link className="underline hover:text-brand-accent text-brand-text font-medium" href={"/privacy-policy/" as any}>Privacy Policy</Link>, and{" "}
+              <Link className="underline hover:text-brand-accent text-brand-text font-medium" href={"/terms/" as any}>Terms &amp; Conditions</Link> before submitting legal or privacy-related requests.
             </p>
           </BubbleCard>
         </div>

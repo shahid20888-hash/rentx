@@ -6,6 +6,7 @@ import { InsightsGrid } from "@/components/InsightsGrid";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 import { webPageSchema } from "@/lib/schema";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = buildMetadata({
   title: "Insights",
@@ -24,6 +25,12 @@ export default function InsightsPage() {
 
   return (
     <div className="space-y-8">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Insights" }
+        ]}
+      />
       {/* Premium Hero Banner */}
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}

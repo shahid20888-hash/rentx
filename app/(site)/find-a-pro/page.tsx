@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 import { webPageSchema } from "@/lib/schema";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 type FindAProPageProps = {
   searchParams?: Promise<{
@@ -58,6 +59,12 @@ export default async function FindAProPage({ searchParams }: FindAProPageProps) 
 
   return (
     <div className="space-y-6">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Find a Pro" }
+        ]}
+      />
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">

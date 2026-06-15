@@ -100,7 +100,7 @@ export function GuidesGrid({ guides }: GuidesGridProps) {
                     {guide.date}
                   </span>
                   <h3 className="text-base font-semibold tracking-tight text-brand-text line-clamp-2 group-hover:text-brand-accent transition-colors leading-snug">
-                    <Link href={`/guides/${guide.slug}`}>
+                    <Link href={`/guides/${guide.slug}/` as any}>
                       {guide.title}
                     </Link>
                   </h3>
@@ -114,7 +114,7 @@ export function GuidesGrid({ guides }: GuidesGridProps) {
                     By {guide.author ?? "Shahid Saleem"}
                   </span>
                   <Link
-                    href={`/guides/${guide.slug}`}
+                    href={`/guides/${guide.slug}/` as any}
                     className={`${primaryButtonClass} text-xs font-semibold py-1.5 px-3 bg-white/[0.04] border border-white/[0.08] hover:border-brand-secondary/30 text-brand-text hover:text-brand-accent rounded-lg flex items-center gap-1 group/btn`}
                   >
                     Read guide

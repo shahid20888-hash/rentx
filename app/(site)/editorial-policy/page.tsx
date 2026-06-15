@@ -56,7 +56,7 @@ export default function EditorialPolicyPage() {
           </p>
           <p>
             You can submit correction requests through our{" "}
-            <Link className="underline hover:text-brand-text" href="/contact">Contact page</Link>.
+            <Link className="underline hover:text-brand-text" href={"/contact/" as any}>Contact page</Link>.
           </p>
         </section>
       </BubbleCard>

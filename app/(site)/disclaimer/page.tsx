@@ -53,7 +53,7 @@ export default function DisclaimerPage() {
           </p>
           <p>
             Additional legal terms are available in our{" "}
-            <Link className="underline hover:text-brand-text" href="/terms">Terms &amp; Conditions</Link>.
+            <Link className="underline hover:text-brand-text" href={"/terms/" as any}>Terms &amp; Conditions</Link>.
           </p>
         </section>
       </BubbleCard>

@@ -34,11 +34,11 @@ export function InternalLinks(props: InternalLinksProps) {
         <div className="grid gap-4 md:grid-cols-3">
           <BubbleCard className="space-y-2 p-4">
             <h3 className="text-xs font-semibold uppercase tracking-wide">State page</h3>
-            <Link href={`/state/${props.stateSlug}`} className="text-xs font-medium">
+            <Link href={`/state/${props.stateSlug}/` as any} className="text-xs font-medium">
               Explore {props.stateName}
             </Link>
             <p className="pt-2 text-[11px]">
-              <Link href={`/find-a-pro?city=${encodeURIComponent(props.citySlug)}`} className="font-medium">
+              <Link href={`/find-a-pro/?city=${encodeURIComponent(props.citySlug)}` as any} className="font-medium">
                 Request local help
               </Link>
             </p>
@@ -49,7 +49,7 @@ export function InternalLinks(props: InternalLinksProps) {
             <ul className="space-y-1 text-xs">
               {props.nearbyCities.slice(0, 4).map((item) => (
                 <li key={item.slug}>
-                  <Link href={`/city/${item.slug}`}>
+                  <Link href={`/city/${item.slug}/` as any}>
                     {item.label}
                   </Link>
                 </li>
@@ -62,7 +62,7 @@ export function InternalLinks(props: InternalLinksProps) {
             <ul className="space-y-1 text-xs">
               {props.guideLinks.slice(0, 3).map((guide) => (
                 <li key={guide.slug}>
-                  <Link href={`/guides/${guide.slug}`}>
+                  <Link href={`/guides/${guide.slug}/` as any}>
                     {guide.title}
                   </Link>
                 </li>
@@ -70,7 +70,7 @@ export function InternalLinks(props: InternalLinksProps) {
             </ul>
             <div className="flex flex-wrap gap-2">
               {props.compareLinks.slice(0, 3).map((link) => (
-                <Link key={link.pair} href={`/compare/${link.pair}`}>
+                <Link key={link.pair} href={`/compare/${link.pair}/` as any}>
                   <Badge>{link.label}</Badge>
                 </Link>
               ))}
@@ -90,7 +90,7 @@ export function InternalLinks(props: InternalLinksProps) {
           <ul className="space-y-1 text-xs">
             {props.topCities.slice(0, 6).map((city) => (
               <li key={city.slug}>
-                <Link href={`/city/${city.slug}`}>
+                <Link href={`/city/${city.slug}/` as any}>
                   {city.label}
                 </Link>
               </li>
@@ -103,13 +103,13 @@ export function InternalLinks(props: InternalLinksProps) {
           <ul className="mb-3 grid gap-2 sm:grid-cols-3 text-xs">
             {props.guideLinks.slice(0, 3).map((guide) => (
               <li key={guide.slug}>
-                <Link href={`/guides/${guide.slug}`}>
+                <Link href={`/guides/${guide.slug}/` as any}>
                   {guide.title}
                 </Link>
               </li>
             ))}
           </ul>
-          <Link href="/find-a-pro" className={primaryButtonClass}>
+          <Link href={"/find-a-pro/" as any} className={primaryButtonClass}>
             Find a local pro
           </Link>
         </BubbleCard>

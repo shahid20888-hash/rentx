@@ -73,7 +73,7 @@ export default async function ComparePairPage({ params }: ComparePairPageProps) 
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "Compare", href: "/compare" },
+          { label: "Compare", href: "/compare/" as any },
           { label: `${from.cityName} vs ${to.cityName}` }
         ]}
       />
@@ -176,7 +176,7 @@ export default async function ComparePairPage({ params }: ComparePairPageProps) 
               </p>
             </div>
             <div className="pt-2">
-              <Link href={`/city/${city.slug}`} className={`w-full text-center ${primaryButtonClass}`}>
+              <Link href={`/city/${city.slug}/` as any} className={`w-full text-center ${primaryButtonClass}`}>
                 Explore {city.cityName} Profile
               </Link>
             </div>

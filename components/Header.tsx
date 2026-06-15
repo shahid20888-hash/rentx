@@ -8,14 +8,14 @@ import { Container } from "./Container";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/find-a-pro", label: "Find a Pro" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact Us" },
-  { href: "/states", label: "States" },
-  { href: "/cities", label: "Cities" },
-  { href: "/compare", label: "Compare" },
-  { href: "/guides", label: "Guides" },
-  { href: "/insights", label: "Insights" }
+  { href: "/find-a-pro/", label: "Find a Pro" },
+  { href: "/about/", label: "About Us" },
+  { href: "/contact/", label: "Contact Us" },
+  { href: "/states/", label: "States" },
+  { href: "/cities/", label: "Cities" },
+  { href: "/compare/", label: "Compare" },
+  { href: "/guides/", label: "Guides" },
+  { href: "/insights/", label: "Insights" }
 ] as const;
 
 export function Header() {
@@ -49,7 +49,7 @@ export function Header() {
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={item.href as any}
                 className={`whitespace-nowrap rounded-full px-2.5 py-1.5 text-[14px] font-semibold underline-offset-4 transition xl:px-3 ${
                   isActive(item.href)
                     ? "bg-brand-hover text-brand-text"
@@ -78,9 +78,9 @@ export function Header() {
         <div className="lg:hidden">
           <div className="mt-3 flex items-center gap-2 sm:gap-3">
             <Link
-              href="/about"
+              href={"/about/" as any}
               className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
-                isActive("/about")
+                isActive("/about/")
                   ? "bg-brand-hover text-brand-text"
                   : "border border-brand-border text-brand-muted hover:bg-brand-hover hover:text-brand-text"
               }`}
@@ -88,9 +88,9 @@ export function Header() {
               About Us
             </Link>
             <Link
-              href="/contact"
+              href={"/contact/" as any}
               className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
-                isActive("/contact")
+                isActive("/contact/")
                   ? "bg-brand-hover text-brand-text"
                   : "border border-brand-border text-brand-muted hover:bg-brand-hover hover:text-brand-text"
               }`}
@@ -104,7 +104,7 @@ export function Header() {
               {navItems.map((item) => (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={item.href as any}
                   className={`block rounded-xl px-3 py-2 text-sm ${
                     isActive(item.href)
                       ? "bg-brand-hover text-brand-text"

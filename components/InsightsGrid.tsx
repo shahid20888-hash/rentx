@@ -100,7 +100,7 @@ export function InsightsGrid({ insights }: InsightsGridProps) {
                     </div>
 
                     <h2 className="text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl text-brand-text leading-tight hover:text-brand-accent transition-colors">
-                      <Link href={`/insights/${featuredInsight.slug}`}>
+                      <Link href={`/insights/${featuredInsight.slug}/` as any}>
                         {featuredInsight.title}
                       </Link>
                     </h2>
@@ -126,7 +126,7 @@ export function InsightsGrid({ insights }: InsightsGridProps) {
                     </div>
 
                     <Link
-                      href={`/insights/${featuredInsight.slug}`}
+                      href={`/insights/${featuredInsight.slug}/` as any}
                       className={`${primaryButtonClass} group flex items-center gap-1.5 text-xs py-2 px-4 bg-brand-secondary hover:bg-brand-secondaryHover text-brand-bg hover:text-brand-bg border-none font-bold rounded-xl shadow-lg transition-transform active:scale-[0.98]`}
                     >
                       Read article
@@ -183,7 +183,7 @@ export function InsightsGrid({ insights }: InsightsGridProps) {
                           {item.date}
                         </span>
                         <h4 className="text-base font-semibold tracking-tight text-brand-text line-clamp-2 group-hover:text-brand-accent transition-colors leading-snug">
-                          <Link href={`/insights/${item.slug}`}>
+                          <Link href={`/insights/${item.slug}/` as any}>
                             {item.title}
                           </Link>
                         </h4>
@@ -197,7 +197,7 @@ export function InsightsGrid({ insights }: InsightsGridProps) {
                           By {item.author ?? "Shahid Saleem"}
                         </span>
                         <Link
-                          href={`/insights/${item.slug}`}
+                          href={`/insights/${item.slug}/` as any}
                           className="text-xs font-semibold text-brand-accent hover:text-brand-secondary hover:underline underline-offset-4 transition-colors flex items-center gap-1 group/btn"
                         >
                           Read article

@@ -64,7 +64,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "Guides", href: "/guides" },
+          { label: "Guides", href: "/guides/" as any },
           { label: guide.meta.title }
         ]}
       />
@@ -114,7 +114,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             <p className="mb-1 font-medium text-brand-primary">States</p>
             {states.map((state) => (
               <div key={state.slug}>
-                <Link href={`/state/${state.slug}`} className="text-brand-text hover:text-brand-text hover:underline">
+                <Link href={`/state/${state.slug}/` as any} className="text-brand-text hover:text-brand-text hover:underline">
                   {state.name}
                 </Link>
               </div>
@@ -124,7 +124,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             <p className="mb-1 font-medium text-brand-primary">Cities</p>
             {cities.map((city) => (
               <div key={city.slug}>
-                <Link href={`/city/${city.slug}`} className="text-brand-text hover:text-brand-text hover:underline">
+                <Link href={`/city/${city.slug}/` as any} className="text-brand-text hover:text-brand-text hover:underline">
                   {city.cityName}, {city.stateCode}
                 </Link>
               </div>
@@ -132,13 +132,13 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </div>
           <div>
             <p className="mb-1 font-medium text-brand-primary">More</p>
-            <Link href="/states" className="block text-brand-text hover:text-brand-text hover:underline">
+            <Link href={"/states/" as any} className="block text-brand-text hover:text-brand-text hover:underline">
               Browse states
             </Link>
-            <Link href="/cities" className="block text-brand-text hover:text-brand-text hover:underline">
+            <Link href={"/cities/" as any} className="block text-brand-text hover:text-brand-text hover:underline">
               Browse cities
             </Link>
-            <Link href="/find-a-pro" className="block text-brand-text hover:text-brand-text hover:underline">
+            <Link href={"/find-a-pro/" as any} className="block text-brand-text hover:text-brand-text hover:underline">
               Find a Pro
             </Link>
           </div>

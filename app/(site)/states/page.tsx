@@ -6,6 +6,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 import { webPageSchema } from "@/lib/schema";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = buildMetadata({
   title: "Cost of Living by US State",
@@ -19,6 +20,12 @@ export default function StatesPage() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "States" }
+        ]}
+      />
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">

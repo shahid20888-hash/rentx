@@ -122,7 +122,7 @@ export default async function CityPage({ params }: CityPageProps) {
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "Cities", href: "/cities" },
+          { label: "Cities", href: "/cities/" as any },
           { label: `${city.cityName}, ${city.stateCode}` }
         ]}
       />
@@ -167,7 +167,7 @@ export default async function CityPage({ params }: CityPageProps) {
             Local real estate pros in {city.cityName}
           </h2>
           <Link
-            href={`/find-a-pro?city=${encodeURIComponent(city.slug)}`}
+            href={`/find-a-pro/?city=${encodeURIComponent(city.slug)}` as any}
             className={primaryButtonClass}
           >
             Request local help
@@ -235,6 +235,27 @@ export default async function CityPage({ params }: CityPageProps) {
           </div>
         </section>
       )}
+
+      {/* Cross-city Comparison Grid Directory */}
+      <section aria-label="Compare with other cities" className="space-y-3 pt-2">
+        <h2 className="text-sm font-semibold text-brand-primary">Compare {city.cityName} with other U.S. cities</h2>
+        <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 text-[11px]">
+          {getCities()
+            .filter((c) => c.slug !== city.slug)
+            .map((c) => {
+              const pair = `${city.slug}-vs-${c.slug}`;
+              return (
+                <Link
+                  key={pair}
+                  href={`/compare/${pair}/` as any}
+                  className="p-2.5 rounded-lg border border-white/[0.06] bg-white/[0.02] hover:bg-brand-secondary/10 hover:border-brand-secondary/35 transition-all text-brand-text hover:text-brand-accent text-center font-medium block shadow-sm"
+                >
+                  {city.cityName} vs {c.cityName}
+                </Link>
+              );
+            })}
+        </div>
+      </section>
 
       <SeoLongform {...seoLongform} />
 

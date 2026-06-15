@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 import { webPageSchema } from "@/lib/schema";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = buildMetadata({
   title: "Compare city cost of living",
@@ -32,6 +33,12 @@ export default function ComparePage() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Compare" }
+        ]}
+      />
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
@@ -65,7 +72,7 @@ export default function ComparePage() {
           {featuredPairs.map((pair) => (
             <Link 
               key={pair.pair} 
-              href={`/compare/${pair.pair}`}
+              href={`/compare/${pair.pair}/` as any}
               className="flex items-center justify-between p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-brand-secondary/10 hover:border-brand-secondary/35 text-brand-text hover:text-brand-accent transition-all duration-300 group/btn shadow-sm"
             >
               <span className="text-sm font-semibold">{pair.label}</span>

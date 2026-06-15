@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { BubbleCard } from "@/components/BubbleCard";
@@ -80,7 +81,7 @@ export default async function InsightDetailPage({ params }: InsightPageProps) {
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "Insights", href: "/insights" },
+          { label: "Insights", href: "/insights/" as any },
           { label: insight.meta.title }
         ]}
       />
@@ -116,13 +117,45 @@ export default async function InsightDetailPage({ params }: InsightPageProps) {
           </BubbleCard>
         </div>
 
-        <BubbleCard as="aside" className="h-fit space-y-2 p-5 xl:sticky xl:top-24">
-          <h2 className="text-sm font-semibold">On this page</h2>
-          <ul className="space-y-1 text-sm">
-            <li><a href="#frequently-asked-questions">Frequently asked questions</a></li>
-            <li><a href="#sources-and-methodology">Sources and methodology</a></li>
-          </ul>
-        </BubbleCard>
+        <div className="space-y-4 xl:sticky xl:top-24">
+          <BubbleCard as="aside" className="h-fit space-y-2 p-5 border border-brand-border bg-brand-surface">
+            <h2 className="text-sm font-semibold text-brand-primary">On this page</h2>
+            <ul className="space-y-1 text-xs text-brand-text/85">
+              <li><a href="#frequently-asked-questions" className="hover:underline">Frequently asked questions</a></li>
+              <li><a href="#sources-and-methodology" className="hover:underline">Sources and methodology</a></li>
+            </ul>
+          </BubbleCard>
+
+          <BubbleCard as="aside" className="h-fit space-y-3 p-5 border border-brand-border bg-brand-surface">
+            <h2 className="text-sm font-semibold text-brand-primary">Useful tools</h2>
+            <ul className="space-y-3.5 text-xs text-brand-text/85">
+              <li>
+                <Link href={"/compare/" as any} className="font-semibold hover:underline text-brand-secondary block mb-0.5">
+                  Compare City Costs
+                </Link>
+                <p className="text-[10px] text-brand-muted leading-relaxed">Run side-by-side budgeting comparisons.</p>
+              </li>
+              <li>
+                <Link href={"/states/" as any} className="font-semibold hover:underline text-brand-secondary block mb-0.5">
+                  State Explorer
+                </Link>
+                <p className="text-[10px] text-brand-muted leading-relaxed">Compare index averages across states.</p>
+              </li>
+              <li>
+                <Link href={"/cities/" as any} className="font-semibold hover:underline text-brand-secondary block mb-0.5">
+                  City Explorer
+                </Link>
+                <p className="text-[10px] text-brand-muted leading-relaxed">Browse detailed costs for 20+ major metros.</p>
+              </li>
+              <li>
+                <Link href={"/find-a-pro/" as any} className="font-semibold hover:underline text-brand-secondary block mb-0.5">
+                  Find a Local Pro
+                </Link>
+                <p className="text-[10px] text-brand-muted leading-relaxed">Connect with moving and rental experts.</p>
+              </li>
+            </ul>
+          </BubbleCard>
+        </div>
       </div>
 
       <FAQ items={faqItems} heading="Insight FAQs" />

@@ -80,7 +80,7 @@ export default function AboutPage() {
               <h3 className="text-sm font-semibold text-white">Editorial standards</h3>
               <p className="text-xs text-brand-muted/85 leading-relaxed">
                 We apply documented editorial practices for sourcing, updates, and corrections. Read our{" "}
-                <Link className="underline hover:text-brand-accent text-brand-text font-medium" href="/editorial-policy">Editorial Policy</Link> for details.
+                <Link className="underline hover:text-brand-accent text-brand-text font-medium" href={"/editorial-policy/" as any}>Editorial Policy</Link> for details.
               </p>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function AboutPage() {
             <p className="text-xs text-brand-muted/85 leading-relaxed pt-2">
               For support, partnership inquiries, or corrections, contact{" "}
               <a className="underline hover:text-brand-accent text-brand-text" href="mailto:support@rentx.us">support@rentx.us</a> or use our{" "}
-              <Link className="underline hover:text-brand-accent text-brand-text font-medium" href="/contact">Contact page</Link>.
+              <Link className="underline hover:text-brand-accent text-brand-text font-medium" href={"/contact/" as any}>Contact page</Link>.
             </p>
           </BubbleCard>
 

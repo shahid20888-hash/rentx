@@ -58,9 +58,9 @@ export default function HomePage() {
             <div className="flex items-center gap-3 text-xs text-brand-muted/70">
               <span>Last updated: {lastUpdated}</span>
               <span>&bull;</span>
-              <Link href="/editorial-policy" className="hover:text-brand-accent underline">Editorial Policy</Link>
+              <Link href={"/editorial-policy/" as any} className="hover:text-brand-accent underline">Editorial Policy</Link>
               <span>&bull;</span>
-              <Link href="/disclaimer" className="hover:text-brand-accent underline">Disclaimer</Link>
+              <Link href={"/disclaimer/" as any} className="hover:text-brand-accent underline">Disclaimer</Link>
             </div>
           </div>
           <div className="max-w-xl pt-2"><SearchBar /></div>
@@ -72,7 +72,7 @@ export default function HomePage() {
           <div>
             <h2 className="text-sm font-semibold">Popular cities</h2>
           </div>
-          <Link href="/cities" className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
+          <Link href={"/cities/" as any} className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
             View all cities -&gt;
           </Link>
         </div>
@@ -95,7 +95,7 @@ export default function HomePage() {
           <div>
             <h2 className="text-sm font-semibold">Popular states</h2>
           </div>
-          <Link href="/states" className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
+          <Link href={"/states/" as any} className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
             View all states -&gt;
           </Link>
         </div>
@@ -128,7 +128,7 @@ export default function HomePage() {
           <div>
             <h2 className="text-sm font-semibold">Latest guides</h2>
           </div>
-          <Link href="/guides" className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
+          <Link href={"/guides/" as any} className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
             View all guides -&gt;
           </Link>
         </div>
@@ -140,7 +140,7 @@ export default function HomePage() {
                 <p className="text-xs">{guide.description}</p>
               </div>
               <div className="mt-3">
-                <Link href={`/guides/${guide.slug}`} className={primaryButtonClass}>
+                <Link href={`/guides/${guide.slug}/` as any} className={primaryButtonClass}>
                   Read guide -&gt;
                 </Link>
               </div>
@@ -154,7 +154,7 @@ export default function HomePage() {
           <div>
             <h2 className="text-sm font-semibold">Latest insights</h2>
           </div>
-          <Link href="/insights" className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
+          <Link href={"/insights/" as any} className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
             View all insights -&gt;
           </Link>
         </div>
@@ -186,7 +186,7 @@ export default function HomePage() {
                   <span className="text-[11px] text-brand-muted">
                     By {latestInsights[0].author ?? "Shahid Saleem"} &bull; {latestInsights[0].date}
                   </span>
-                  <Link href={`/insights/${latestInsights[0].slug}`} className={primaryButtonClass}>
+                  <Link href={`/insights/${latestInsights[0].slug}/` as any} className={primaryButtonClass}>
                     Read article -&gt;
                   </Link>
                 </div>
@@ -220,7 +220,7 @@ export default function HomePage() {
                     <span className="text-[10px] text-brand-muted">
                       {insight.date}
                     </span>
-                    <Link href={`/insights/${insight.slug}`} className={primaryButtonClass}>
+                    <Link href={`/insights/${insight.slug}/` as any} className={primaryButtonClass}>
                       Read article -&gt;
                     </Link>
                   </div>

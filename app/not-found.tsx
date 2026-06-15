@@ -25,10 +25,10 @@ export default function NotFound() {
           <Link href="/" className={primaryButtonClass}>
             Go to homepage
           </Link>
-          <Link href="/states" className={primaryButtonClass}>
+          <Link href={"/states/" as any} className={primaryButtonClass}>
             Explore states
           </Link>
-          <Link href="/cities" className={primaryButtonClass}>
+          <Link href={"/cities/" as any} className={primaryButtonClass}>
             Explore cities
           </Link>
         </div>

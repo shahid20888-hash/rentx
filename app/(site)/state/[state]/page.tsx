@@ -74,7 +74,7 @@ export default async function StatePage({ params }: StatePageProps) {
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "States", href: "/states" },
+          { label: "States", href: "/states/" as any },
           { label: state.name }
         ]}
       />

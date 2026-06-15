@@ -47,9 +47,9 @@ export default function AdvertisingDisclosurePage() {
           <h2 className="text-base font-semibold">Related Policies</h2>
           <p>
             For additional details, review our{" "}
-            <Link className="underline hover:text-brand-text" href="/editorial-policy">Editorial Policy</Link>,{" "}
-            <Link className="underline hover:text-brand-text" href="/privacy-policy">Privacy Policy</Link>, and{" "}
-            <Link className="underline hover:text-brand-text" href="/cookie-policy">Cookie Policy</Link>.
+            <Link className="underline hover:text-brand-text" href={"/editorial-policy/" as any}>Editorial Policy</Link>,{" "}
+            <Link className="underline hover:text-brand-text" href={"/privacy-policy/" as any}>Privacy Policy</Link>, and{" "}
+            <Link className="underline hover:text-brand-text" href={"/cookie-policy/" as any}>Cookie Policy</Link>.
           </p>
         </section>
       </BubbleCard>

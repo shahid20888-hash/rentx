@@ -164,7 +164,7 @@ export function LeadForm({ city = "", state = "", compact = false, className = "
 
       <p className="text-[11px] text-brand-text/75">
         By submitting, you agree to our{" "}
-        <Link href="/privacy-policy" className="font-medium text-brand-text hover:text-brand-text hover:underline">
+        <Link href={"/privacy-policy/" as any} className="font-medium text-brand-text hover:text-brand-text hover:underline">
           Privacy Policy
         </Link>
         .

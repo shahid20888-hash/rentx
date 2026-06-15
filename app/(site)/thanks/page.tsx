@@ -32,13 +32,13 @@ export default function ThanksPage() {
           In the meantime, you can continue exploring cost-of-living information across US cities and states, or read our short guides on budgeting and planning a move.
         </p>
         <div className="flex flex-wrap gap-3 text-xs">
-          <Link href="/states" className={primaryButtonClass}>
+          <Link href={"/states/" as any} className={primaryButtonClass}>
             Explore States -&gt;
           </Link>
-          <Link href="/cities" className={primaryButtonClass}>
+          <Link href={"/cities/" as any} className={primaryButtonClass}>
             Explore Cities -&gt;
           </Link>
-          <Link href="/guides" className={primaryButtonClass}>
+          <Link href={"/guides/" as any} className={primaryButtonClass}>
             Read Guides -&gt;
           </Link>
         </div>

@@ -57,7 +57,7 @@ export default function DmcaPage() {
           </p>
           <p>
             For broader policy context, refer to our{" "}
-            <Link className="underline hover:text-brand-text" href="/terms">Terms &amp; Conditions</Link>.
+            <Link className="underline hover:text-brand-text" href={"/terms/" as any}>Terms &amp; Conditions</Link>.
           </p>
         </section>
       </BubbleCard>

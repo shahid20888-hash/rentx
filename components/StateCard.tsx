@@ -22,7 +22,7 @@ export function StateCard({ name, code, slug, summary }: StateCardProps) {
 
   return (
     <Link
-      href={`/state/${slug}`}
+      href={`/state/${slug}/` as any}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-focus focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg"
     >
       <BubbleCard className="relative overflow-hidden flex flex-col p-0 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-secondary/30 hover:shadow-[0_8px_25px_rgba(0,0,0,0.12)]">

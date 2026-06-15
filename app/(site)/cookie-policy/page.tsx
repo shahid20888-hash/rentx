@@ -51,7 +51,7 @@ export default function CookiePolicyPage() {
           </p>
           <p>
             For additional privacy rights, review our{" "}
-            <Link className="underline hover:text-brand-text" href="/privacy-policy">Privacy Policy</Link>.
+            <Link className="underline hover:text-brand-text" href={"/privacy-policy/" as any}>Privacy Policy</Link>.
           </p>
         </section>
       </BubbleCard>
