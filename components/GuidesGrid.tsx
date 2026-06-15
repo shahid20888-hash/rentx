@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { GuideMeta } from "@/lib/guides";
 import { primaryButtonClass } from "@/components/ui/Button";
@@ -70,10 +71,12 @@ export function GuidesGrid({ guides }: GuidesGridProps) {
               {/* Card Cover Image */}
               {guide.coverImage && (
                 <div className="relative h-[180px] overflow-hidden">
-                  <img
+                  <Image
                     src={guide.coverImage}
                     alt={guide.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
                   

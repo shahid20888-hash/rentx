@@ -70,7 +70,7 @@ export function buildMetadata({
   const fullTitle = cleanTitle
     ? `${safeTitle} | ${SITE_NAME}`
     : `${SITE_NAME} - Cost of Living in US Cities & States`;
-  const resolvedImage = imagePath ?? "/logo-rentx.png";
+  const resolvedImage = imagePath ?? "/images/rentx-og-banner.png";
 
   const metadata: Metadata = {
     title: {

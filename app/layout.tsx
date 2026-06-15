@@ -30,12 +30,16 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <head>
-        <script
+      <head />
+      <body className="font-sans bg-brand-bg text-brand-text" suppressHydrationWarning>
+        <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-J6HMYCTGCW"
+          strategy="afterInteractive"
         />
-        <script
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -45,8 +49,6 @@ export default function RootLayout({
             `
           }}
         />
-      </head>
-      <body className="font-sans bg-brand-bg text-brand-text" suppressHydrationWarning>
         <Script
           id="adsense-global-loader"
           async

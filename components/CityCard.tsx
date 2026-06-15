@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BubbleCard } from "./BubbleCard";
 
@@ -42,11 +43,12 @@ export function CityCard({ name, stateCode, slug, summary, costIndex }: CityCard
       <BubbleCard className="relative overflow-hidden flex flex-col p-0 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-secondary/30 hover:shadow-[0_8px_25px_rgba(0,0,0,0.12)]">
         {/* Card Image Header */}
         <div className="relative h-[110px] w-full overflow-hidden border-b border-white/[0.04]">
-          <img
+          <Image
             src={getCityImage(slug)}
-            alt={name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            alt={`Skyline profile of ${name}`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-45" />
           {typeof costIndex === "number" && (

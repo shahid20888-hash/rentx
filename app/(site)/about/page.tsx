@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
@@ -21,10 +22,13 @@ export default function AboutPage() {
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src="/images/about-hero.png"
             alt="RentX Editorial Office Workspace"
-            className="w-full h-full object-cover opacity-25"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-25"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E2A23] via-[#0E2A23]/95 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A23] via-transparent to-transparent" />
@@ -103,10 +107,12 @@ export default function AboutPage() {
 
           {/* Custom Vetted Visual Box */}
           <div className="relative flex-1 overflow-hidden rounded-2xl border border-white/[0.1] shadow-lg min-h-[200px] group">
-            <img
+            <Image
               src="/images/about-hero.png"
               alt="Editorial workspace desk"
-              className="absolute inset-0 w-full h-full object-cover opacity-65 transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover opacity-65 transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 space-y-1">

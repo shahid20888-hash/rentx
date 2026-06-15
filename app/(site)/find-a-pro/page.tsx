@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { LeadForm } from "@/components/LeadForm";
 import { buildMetadata } from "@/lib/seo";
 import { CITIES, PROS } from "@/lib/data";
@@ -68,10 +69,13 @@ export default async function FindAProPage({ searchParams }: FindAProPageProps) 
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src="/images/find-a-pro-hero.png"
             alt="Real estate professional showing housing options"
-            className="w-full h-full object-cover opacity-20"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E2A23] via-[#0E2A23]/95 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A23] via-transparent to-transparent" />
@@ -131,10 +135,12 @@ export default async function FindAProPage({ searchParams }: FindAProPageProps) 
           
           {/* Right Column illustration block */}
           <div className="hidden lg:block relative h-[300px] rounded-2xl overflow-hidden border border-white/[0.1] shadow-lg group">
-            <img
+            <Image
               src="/images/find-a-pro-hero.png"
               alt="Real estate professional"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <p className="absolute bottom-4 left-4 right-4 text-xs text-white/90 font-medium">

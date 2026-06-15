@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { InsightMeta } from "@/lib/insights";
 import { primaryButtonClass } from "@/components/ui/Button";
@@ -71,10 +72,12 @@ export function InsightsGrid({ insights }: InsightsGridProps) {
               <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] items-stretch">
                 {/* Cover Image Container */}
                 <div className="relative min-h-[260px] md:min-h-full overflow-hidden group">
-                  <img
+                  <Image
                     src={featuredInsight.coverImage}
-                    alt={featuredInsight.coverAlt}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    alt={featuredInsight.coverAlt || `Cover image for ${featuredInsight.title}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                   {featuredInsight.category && (
@@ -154,10 +157,12 @@ export function InsightsGrid({ insights }: InsightsGridProps) {
                   >
                     {/* Card Cover Image */}
                     <div className="relative h-[180px] overflow-hidden">
-                      <img
+                      <Image
                         src={item.coverImage}
-                        alt={item.coverAlt}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        alt={item.coverAlt || `Cover image for ${item.title}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
                       

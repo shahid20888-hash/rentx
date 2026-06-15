@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getCities, getStates } from "@/lib/data";
@@ -35,10 +36,13 @@ export default function HomePage() {
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src="/images/homepage-hero.png"
             alt="US Metro Skyline twilight"
-            className="w-full h-full object-cover opacity-30"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E2A23] via-[#0E2A23]/95 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A23] via-transparent to-transparent" />
@@ -164,10 +168,12 @@ export default function HomePage() {
           <BubbleCard as="article" className="overflow-hidden p-0 rounded-3xl border border-brand-border bg-brand-surface">
             <div className="grid gap-6 md:grid-cols-[1.2fr_1fr] items-stretch">
               <div className="relative min-h-[220px] md:min-h-full overflow-hidden">
-                <img
+                <Image
                   src={latestInsights[0].coverImage}
-                  alt={latestInsights[0].coverAlt}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                  alt={latestInsights[0].coverAlt || `Cover image for ${latestInsights[0].title}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 hover:scale-[1.03]"
                 />
               </div>
               <div className="flex flex-col justify-between p-6 sm:p-8 space-y-4">
@@ -201,10 +207,12 @@ export default function HomePage() {
             {latestInsights.slice(1, 3).map((insight) => (
               <BubbleCard key={insight.slug} as="article" className="overflow-hidden p-0 rounded-2xl flex flex-col justify-between border border-brand-border bg-brand-surface">
                 <div className="relative h-[160px] overflow-hidden">
-                  <img
+                  <Image
                     src={insight.coverImage}
-                    alt={insight.coverAlt}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                    alt={insight.coverAlt || `Cover image for ${insight.title}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-500 hover:scale-[1.03]"
                   />
                 </div>
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
