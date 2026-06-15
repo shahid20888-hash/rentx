@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { GUIDES } from "@/lib/guides";
 import { buildMetadata } from "@/lib/seo";
+import { GUIDES } from "@/lib/guides";
 import { BubbleCard } from "@/components/BubbleCard";
-import { primaryButtonClass } from "@/components/ui/Button";
+import { GuidesGrid } from "@/components/GuidesGrid";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 
@@ -14,55 +13,41 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function GuidesPage() {
-  const guides = [...GUIDES].sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
+  // Map and sort the guides metadata by date descending
+  const guides = [...GUIDES]
+    .sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1))
+    .map((guide) => guide.meta);
+    
   const seoLongform = getStaticSeoLongformContent("guides");
   const lastUpdated = "June 15, 2026";
 
   return (
     <div className="space-y-8">
-      <BubbleCard as="header" className="space-y-3 p-6 sm:p-8">
-        <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">Cost of living guides</h1>
-        <p className="max-w-2xl text-sm">
-          Practical, plain-language guides designed to help readers evaluate relocation costs and avoid common budgeting mistakes.
-        </p>
-        <p className="text-xs text-brand-muted">Last updated: {lastUpdated}</p>
+      {/* Premium Hero Banner */}
+      <BubbleCard as="header" className="relative overflow-hidden p-8 sm:p-10 rounded-3xl border border-white/[0.08] bg-gradient-to-r from-brand-bg via-[#11322a] to-brand-bg shadow-xl">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-24 h-24 bg-brand-accent/5 rounded-full blur-2xl pointer-events-none" />
+        
+        <div className="relative space-y-4 max-w-3xl">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-secondary bg-brand-secondary/15 px-3 py-1.5 rounded-lg border border-brand-secondary/20">
+            RentX Academy
+          </span>
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
+            Cost of Living Guides
+          </h1>
+          <p className="text-sm sm:text-base text-brand-muted/95 leading-relaxed">
+            Practical, step-by-step guides written to help you plan moving logistics, check real rental affordability, and avoid common budgeting mistakes.
+          </p>
+          <div className="pt-2 flex items-center gap-3 text-xs text-brand-muted/70">
+            <span>By RentX Research Team</span>
+            <span>&bull;</span>
+            <span>Last updated: {lastUpdated}</span>
+          </div>
+        </div>
       </BubbleCard>
 
-      <section aria-label="Guides" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {guides.map((guide) => (
-          <BubbleCard key={guide.slug} as="article" className="overflow-hidden p-0 rounded-2xl flex flex-col justify-between border border-brand-border bg-brand-surface">
-            {guide.meta.coverImage && (
-              <div className="relative h-[160px] overflow-hidden">
-                <img
-                  src={guide.meta.coverImage}
-                  alt={guide.meta.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
-                />
-              </div>
-            )}
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div className="space-y-2">
-                <h2 className="text-base font-semibold tracking-tight text-brand-text line-clamp-2">
-                  <Link href={`/guides/${guide.slug}`} className="hover:underline">
-                    {guide.meta.title}
-                  </Link>
-                </h2>
-                <p className="text-xs text-brand-muted line-clamp-3">
-                  {guide.meta.description}
-                </p>
-              </div>
-              <div className="pt-2 flex items-center justify-between border-t border-brand-border/40">
-                <span className="text-[10px] text-brand-muted">
-                  {guide.meta.date}
-                </span>
-                <Link href={`/guides/${guide.slug}`} className={primaryButtonClass}>
-                  Read guide -&gt;
-                </Link>
-              </div>
-            </div>
-          </BubbleCard>
-        ))}
-      </section>
+      {/* Interactive Grid Component */}
+      <GuidesGrid guides={guides} />
 
       <SeoLongform {...seoLongform} />
     </div>

@@ -30,6 +30,8 @@ export type InsightMeta = {
   coverImage: string;
   coverAlt: string;
   coverCaption: string;
+  category?: string;
+  readTime?: string;
 };
 
 export type InsightDefinition = {
@@ -50,7 +52,9 @@ export const INSIGHTS: InsightDefinition[] = [
       author: "Shahid Saleem",
       coverImage: "/images/insights/california-to-texas-moving-cost-2026.webp",
       coverAlt: "Moving boxes and a budget checklist for a California to Texas relocation",
-      coverCaption: "Understanding the true cost of relocating from California to Texas in 2026 requires looking at transport, housing transitions, and local tax shifts."
+      coverCaption: "Understanding the true cost of relocating from California to Texas in 2026 requires looking at transport, housing transitions, and local tax shifts.",
+      category: "Relocation",
+      readTime: "7 min read"
     },
     Component: CaliforniaToTexasMovingCost2026
   },
@@ -65,7 +69,9 @@ export const INSIGHTS: InsightDefinition[] = [
       author: "Shahid Saleem",
       coverImage: "/images/insights/salary-needed-dallas-tx-2026.webp",
       coverAlt: "Monthly salary and rent planning for Dallas Texas",
-      coverCaption: "Determining a comfortable salary in Dallas in 2026 requires balancing rising rents, transportation needs, and savings goals."
+      coverCaption: "Determining a comfortable salary in Dallas in 2026 requires balancing rising rents, transportation needs, and savings goals.",
+      category: "Salary Planning",
+      readTime: "5 min read"
     },
     Component: SalaryNeededToLiveComfortablyInDallasTx2026
   },
@@ -80,7 +86,9 @@ export const INSIGHTS: InsightDefinition[] = [
       author: "Shahid Saleem",
       coverImage: "/images/insights/houston-family-cost-of-living-2026.webp",
       coverAlt: "Family budget planning for Houston Texas cost of living",
-      coverCaption: "Houston offers families high affordability, but managing summer electric bills and commuter costs is key to budgeting."
+      coverCaption: "Houston offers families high affordability, but managing summer electric bills and commuter costs is key to budgeting.",
+      category: "Cost of Living",
+      readTime: "6 min read"
     },
     Component: HoustonCostOfLivingFamilyOfFour2026
   },
@@ -95,7 +103,9 @@ export const INSIGHTS: InsightDefinition[] = [
       author: "Shahid Saleem",
       coverImage: "/images/insights/single-person-monthly-cost-of-living-us-2026.webp",
       coverAlt: "Single person monthly cost of living budget in the United States",
-      coverCaption: "Living alone in the U.S. in 2026 requires careful budgeting across fixed costs like rent and variable costs like transport."
+      coverCaption: "Living alone in the U.S. in 2026 requires careful budgeting across fixed costs like rent and variable costs like transport.",
+      category: "Cost of Living",
+      readTime: "6 min read"
     },
     Component: MonthlyCostOfLivingSinglePersonUs2026
   },
@@ -112,7 +122,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/complete-guide-us-cost-of-living.webp",
       coverAlt: "Modern apartment buildings in a major US city at sunset",
       coverCaption:
-        "Housing choices, commute distance, and neighborhood pricing all interact to define what affordability looks like in real life."
+        "Housing choices, commute distance, and neighborhood pricing all interact to define what affordability looks like in real life.",
+      category: "Cost of Living",
+      readTime: "8 min read"
     },
     Component: CompleteGuide
   },
@@ -129,7 +141,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/compare-cities-before-relocating.webp",
       coverAlt: "Residential skyline with high-rise apartment towers in downtown",
       coverCaption:
-        "Comparing cities works best when you measure full monthly life costs, not just headline rent numbers."
+        "Comparing cities works best when you measure full monthly life costs, not just headline rent numbers.",
+      category: "Relocation",
+      readTime: "5 min read"
     },
     Component: CompareCities
   },
@@ -146,7 +160,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/rent-vs-buy-2026-full-breakdown.webp",
       coverAlt: "Suburban single-family homes representing rent versus buy choices",
       coverCaption:
-        "The better option depends on timeline, cash reserves, and local housing volatility more than on simple monthly payment comparisons."
+        "The better option depends on timeline, cash reserves, and local housing volatility more than on simple monthly payment comparisons.",
+      category: "Housing & Rent",
+      readTime: "7 min read"
     },
     Component: RentVsBuy2026
   },
@@ -163,7 +179,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/cost-of-living-index-explained.webp",
       coverAlt: "Urban residential district with varied housing density and costs",
       coverCaption:
-        "Indexes are useful directionally, but smart decisions come from pairing them with local housing and utility realities."
+        "Indexes are useful directionally, but smart decisions come from pairing them with local housing and utility realities.",
+      category: "Methodology",
+      readTime: "4 min read"
     },
     Component: IndexExplained
   },
@@ -180,7 +198,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/salary-needs-major-us-cities.webp",
       coverAlt: "City apartment towers and condos near central business district",
       coverCaption:
-        "Income planning should match the housing market and daily expenses in the exact city where you plan to live."
+        "Income planning should match the housing market and daily expenses in the exact city where you plan to live.",
+      category: "Salary Planning",
+      readTime: "6 min read"
     },
     Component: SalaryNeeds
   },
@@ -197,7 +217,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/hidden-costs-moving-states.webp",
       coverAlt: "Row of residential homes in a neighborhood during relocation season",
       coverCaption:
-        "Many moving budgets fail because setup costs and short-term housing are underestimated during transitions."
+        "Many moving budgets fail because setup costs and short-term housing are underestimated during transitions.",
+      category: "Relocation",
+      readTime: "6 min read"
     },
     Component: HiddenCosts
   },
@@ -214,7 +236,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/property-taxes-by-state-explained.webp",
       coverAlt: "Single-family homes in a suburban US market with varied property values",
       coverCaption:
-        "A lower home price does not always mean lower ownership cost when annual property taxes are significantly higher."
+        "A lower home price does not always mean lower ownership cost when annual property taxes are significantly higher.",
+      category: "Taxes & Finance",
+      readTime: "5 min read"
     },
     Component: PropertyTaxes
   },
@@ -231,7 +255,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/utility-costs-across-us-cities.webp",
       coverAlt: "Modern residential buildings where utility efficiency affects living costs",
       coverCaption:
-        "Utility bills are one of the fastest-changing parts of a budget, especially between climates and home types."
+        "Utility bills are one of the fastest-changing parts of a budget, especially between climates and home types.",
+      category: "Cost of Living",
+      readTime: "5 min read"
     },
     Component: UtilityCosts
   },
@@ -248,7 +274,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/grocery-cost-differences-by-region.webp",
       coverAlt: "Residential district near neighborhood retail areas where food prices vary",
       coverCaption:
-        "Regional food pricing can quietly change a family budget even when housing costs remain stable."
+        "Regional food pricing can quietly change a family budget even when housing costs remain stable.",
+      category: "Cost of Living",
+      readTime: "4 min read"
     },
     Component: GroceryCosts
   },
@@ -265,7 +293,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/transportation-costs-urban-vs-suburban.webp",
       coverAlt: "Apartment and condo blocks near major commuter corridors in a US metro",
       coverCaption:
-        "Commuting patterns and parking realities often separate affordable neighborhoods from expensive ones."
+        "Commuting patterns and parking realities often separate affordable neighborhoods from expensive ones.",
+      category: "Cost of Living",
+      readTime: "5 min read"
     },
     Component: TransportCosts
   },
@@ -282,7 +312,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/healthcare-costs-by-region.webp",
       coverAlt: "Urban residential towers in a region with varying healthcare access costs",
       coverCaption:
-        "Healthcare affordability depends on both insurance structure and where households actually receive care."
+        "Healthcare affordability depends on both insurance structure and where households actually receive care.",
+      category: "Cost of Living",
+      readTime: "5 min read"
     },
     Component: HealthcareCosts
   },
@@ -299,7 +331,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/affordable-cities-for-families-2026.webp",
       coverAlt: "Family-oriented suburban homes with nearby schools and services",
       coverCaption:
-        "For families, affordability is more than rent: school access, commute, and childcare costs can dominate the budget."
+        "For families, affordability is more than rent: school access, commute, and childcare costs can dominate the budget.",
+      category: "Cost of Living",
+      readTime: "6 min read"
     },
     Component: AffordableFamilies
   },
@@ -316,7 +350,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/most-expensive-us-cities-analysis.webp",
       coverAlt: "Dense skyline of high-cost residential towers in a major US city",
       coverCaption:
-        "When housing supply lags demand, city costs can remain elevated even when other expenses cool."
+        "When housing supply lags demand, city costs can remain elevated even when other expenses cool.",
+      category: "Cost of Living",
+      readTime: "5 min read"
     },
     Component: ExpensiveCities
   },
@@ -333,7 +369,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/relocation-budget-template.webp",
       coverAlt: "Residential moving day scene with homes and apartment buildings",
       coverCaption:
-        "A strong relocation plan separates one-time moving costs from the recurring expenses that begin immediately."
+        "A strong relocation plan separates one-time moving costs from the recurring expenses that begin immediately.",
+      category: "Relocation",
+      readTime: "6 min read"
     },
     Component: RelocationTemplate
   },
@@ -350,7 +388,9 @@ export const INSIGHTS: InsightDefinition[] = [
       coverImage: "/images/insights/inflation-impact-on-cost-of-living.webp",
       coverAlt: "Apartment buildings and condos in a market affected by rising costs",
       coverCaption:
-        "Inflation affects households unevenly, and housing-related costs often absorb the largest share of that pressure."
+        "Inflation affects households unevenly, and housing-related costs often absorb the largest share of that pressure.",
+      category: "Cost of Living",
+      readTime: "5 min read"
     },
     Component: InflationImpact
   }

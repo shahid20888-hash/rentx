@@ -12,6 +12,8 @@ export type GuideMeta = {
   updatedAt?: string;
   author?: string;
   coverImage?: string;
+  category?: string;
+  readTime?: string;
   toc?: { id: string; label: string }[];
 };
 
@@ -32,6 +34,8 @@ export const GUIDES: GuideDefinition[] = [
       updatedAt: "2026-06-15",
       author: "Shahid Saleem",
       coverImage: "/images/insights/rent-affordability-75000-salary-2026.webp",
+      category: "Rent Affordability",
+      readTime: "6 min read",
       toc: [
         { id: "quick-answer", label: "Quick answer" },
         { id: "the-30-rent-rule-on-a-75k-salary", label: "The 30% rent rule on a $75K salary" },
@@ -56,6 +60,8 @@ export const GUIDES: GuideDefinition[] = [
       date: "2025-01-10",
       updatedAt: "2026-02-28",
       coverImage: "/images/insights/cost-of-living-index-explained.webp",
+      category: "Methodology",
+      readTime: "5 min read",
       toc: [
         { id: "in-this-guide", label: "In this guide" },
         { id: "what-a-cost-of-living-index-actually-measures", label: "What a cost-of-living index measures" },
@@ -77,6 +83,8 @@ export const GUIDES: GuideDefinition[] = [
       date: "2025-02-05",
       updatedAt: "2026-02-28",
       coverImage: "/images/insights/hidden-costs-moving-states.webp",
+      category: "Relocation",
+      readTime: "4 min read",
       toc: [
         { id: "in-this-guide", label: "In this guide" },
         { id: "step-1-early-research-and-budgeting", label: "Step 1: Research and budgeting" },
@@ -97,6 +105,8 @@ export const GUIDES: GuideDefinition[] = [
       date: "2025-03-12",
       updatedAt: "2026-02-28",
       coverImage: "/images/insights/rent-vs-buy-2026-full-breakdown.webp",
+      category: "Housing & Rent",
+      readTime: "5 min read",
       toc: [
         { id: "in-this-guide", label: "In this guide" },
         { id: "the-case-for-renting", label: "The case for renting" },
