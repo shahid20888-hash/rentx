@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Script from "next/script";
 import type { Metadata } from "next";
 import { getCities, getStates } from "@/lib/data";
 import { getLatestGuides } from "@/lib/guides";
@@ -33,13 +32,6 @@ export default function HomePage() {
 
   return (
     <div className="space-y-10">
-      <Script
-        id="adsense-homepage-loader"
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3635656048122177"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">

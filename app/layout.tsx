@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "../styles/globals.css";
 import { defaultMetadata } from "@/lib/seo";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
+
+const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-3635656048122177";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +47,13 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans bg-brand-bg text-brand-text" suppressHydrationWarning>
+        <Script
+          id="adsense-global-loader"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
