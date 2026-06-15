@@ -55,33 +55,33 @@ export function Footer() {
           <div>
             <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-text">Services</h2>
             <ul className="space-y-1.5">
-              <li><Link href="/compare" className="text-brand-muted hover:text-brand-text hover:underline">Compare Costs</Link></li>
-              <li><Link href="/states" className="text-brand-muted hover:text-brand-text hover:underline">State Explorer</Link></li>
-              <li><Link href="/cities" className="text-brand-muted hover:text-brand-text hover:underline">City Explorer</Link></li>
-              <li><Link href="/guides" className="text-brand-muted hover:text-brand-text hover:underline">Moving Guides</Link></li>
-              <li><Link href="/find-a-pro" className="text-brand-muted hover:text-brand-text hover:underline">Find a Pro</Link></li>
+              <li><Link href={"/compare/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Compare Costs</Link></li>
+              <li><Link href={"/states/" as any} className="text-brand-muted hover:text-brand-text hover:underline">State Explorer</Link></li>
+              <li><Link href={"/cities/" as any} className="text-brand-muted hover:text-brand-text hover:underline">City Explorer</Link></li>
+              <li><Link href={"/guides/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Moving Guides</Link></li>
+              <li><Link href={"/find-a-pro/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Find a Pro</Link></li>
             </ul>
           </div>
 
           <div className="flex flex-col gap-3">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-brand-text">Legal Pages</h2>
             <ul className="space-y-1.5">
-              <li><Link href="/privacy-policy" className="text-brand-muted hover:text-brand-text hover:underline">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="text-brand-muted hover:text-brand-text hover:underline">Terms &amp; Conditions</Link></li>
-              <li><Link href="/disclaimer" className="text-brand-muted hover:text-brand-text hover:underline">Disclaimer</Link></li>
-              <li><Link href="/editorial-policy" className="text-brand-muted hover:text-brand-text hover:underline">Editorial Policy</Link></li>
-              <li><Link href="/cookie-policy" className="text-brand-muted hover:text-brand-text hover:underline">Cookie Policy</Link></li>
-              <li><Link href="/dmca" className="text-brand-muted hover:text-brand-text hover:underline">DMCA</Link></li>
-              <li><Link href="/advertising-disclosure" className="text-brand-muted hover:text-brand-text hover:underline">Advertising Disclosure</Link></li>
+              <li><Link href={"/privacy-policy/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Privacy Policy</Link></li>
+              <li><Link href={"/terms/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Terms &amp; Conditions</Link></li>
+              <li><Link href={"/disclaimer/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Disclaimer</Link></li>
+              <li><Link href={"/editorial-policy/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Editorial Policy</Link></li>
+              <li><Link href={"/cookie-policy/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Cookie Policy</Link></li>
+              <li><Link href={"/dmca/" as any} className="text-brand-muted hover:text-brand-text hover:underline">DMCA</Link></li>
+              <li><Link href={"/advertising-disclosure/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Advertising Disclosure</Link></li>
             </ul>
           </div>
 
           <div className="flex flex-col gap-4">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-brand-text">Company Info</h2>
             <ul className="space-y-1.5">
-              <li><Link href="/about" className="text-brand-muted hover:text-brand-text hover:underline">About Us</Link></li>
-              <li><Link href="/contact" className="text-brand-muted hover:text-brand-text hover:underline">Contact Us</Link></li>
-              <li><Link href="/insights" className="text-brand-muted hover:text-brand-text hover:underline">Latest Insights</Link></li>
+              <li><Link href={"/about/" as any} className="text-brand-muted hover:text-brand-text hover:underline">About Us</Link></li>
+              <li><Link href={"/contact/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Contact Us</Link></li>
+              <li><Link href={"/insights/" as any} className="text-brand-muted hover:text-brand-text hover:underline">Latest Insights</Link></li>
             </ul>
             <div className="flex items-center gap-3 pt-1">
               <SocialIcon href="https://www.facebook.com/profile.php?id=61586119617473" label="RentX Facebook">
@@ -108,7 +108,7 @@ export function Footer() {
             <p className="text-xs text-brand-muted">&copy; {currentYear} RentX. All rights reserved.</p>
             <p className="text-xs text-brand-muted">
               Independent informational content. Learn more in our{" "}
-              <Link href="/editorial-policy" className="underline hover:text-brand-text">Editorial Policy</Link>.
+              <Link href={"/editorial-policy/" as any} className="underline hover:text-brand-text">Editorial Policy</Link>.
             </p>
           </div>
         </div>

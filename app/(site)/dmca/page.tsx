@@ -4,6 +4,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { buildMetadata } from "@/lib/seo";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "DMCA Policy",
@@ -61,6 +62,18 @@ export default function DmcaPage() {
         </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "DMCA Policy",
+              description: "Read the RentX copyright policy and DMCA takedown request process.",
+              path: "/dmca/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

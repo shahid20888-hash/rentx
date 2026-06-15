@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Advertising Disclosure",
@@ -26,7 +27,7 @@ export default function AdvertisingDisclosurePage() {
         <section className="space-y-2">
           <h2 className="text-base font-semibold">How RentX Is Supported</h2>
           <p>
-            RentX may earn revenue from advertising placements. This support helps us maintain free access to educational cost-of-living content.
+            RentX is supported through display advertising (such as Google AdSense), sponsored content, affiliate marketing partnerships, and partner referral options. When you interact with or purchase services through these links, we may receive a commission or referral fee at no extra cost to you. This revenue enables us to maintain free, open access to our cost-of-living databases and budgeting resources.
           </p>
         </section>
 
@@ -52,6 +53,18 @@ export default function AdvertisingDisclosurePage() {
           </p>
         </section>
       </BubbleCard>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Advertising Disclosure",
+              description: "Learn how advertising supports RentX and how editorial independence is protected.",
+              path: "/advertising-disclosure/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

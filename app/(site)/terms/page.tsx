@@ -4,6 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Terms of Use",
@@ -67,6 +68,18 @@ export default function TermsPage() {
         </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Terms & Conditions",
+              description: "The basic terms for using RentX and its cost-of-living information.",
+              path: "/terms/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

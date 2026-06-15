@@ -4,6 +4,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { buildMetadata } from "@/lib/seo";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Cookie Policy",
@@ -55,6 +56,18 @@ export default function CookiePolicyPage() {
         </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Cookie Policy",
+              description: "Learn what cookies are, why RentX uses them, and how to control them.",
+              path: "/cookie-policy/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

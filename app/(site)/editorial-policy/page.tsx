@@ -4,6 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Editorial Policy",
@@ -60,6 +61,18 @@ export default function EditorialPolicyPage() {
         </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Editorial Policy",
+              description: "How RentX approaches independence, accuracy, and updates for cost-of-living guides.",
+              path: "/editorial-policy/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

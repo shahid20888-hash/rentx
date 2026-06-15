@@ -4,6 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy",
@@ -51,7 +52,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-2">
           <h2 className="text-base font-semibold">Advertising, Cookies, and Consent</h2>
           <p>
-            RentX may use advertising and analytics technologies, including cookies, to support free access to our content. You can manage cookies through browser settings at any time.
+            RentX displays third-party advertisements served by networks like Google AdSense. Google and other third-party vendors use cookies to serve targeted ads based on your prior visits to our site or other websites. You may manage these tracking preferences or opt out of personalized advertising by visiting Google's Ads Settings. We also store user-submitted information (such as names, emails, and locations provided on our contact and relocation lead forms) solely to respond to your specific requests and do not sell this personal data to third parties.
           </p>
           <p>
             For cookie details, review our <Link className="underline hover:text-brand-text" href="/cookie-policy">Cookie Policy</Link>. For ad and content standards, see our{" "}
@@ -71,6 +72,18 @@ export default function PrivacyPolicyPage() {
         </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Privacy Policy",
+              description: "How RentX handles basic usage data and respects your privacy.",
+              path: "/privacy-policy/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

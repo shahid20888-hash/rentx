@@ -4,6 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Disclaimer",
@@ -57,6 +58,18 @@ export default function DisclaimerPage() {
         </section>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Disclaimer",
+              description: "Important limitations on how you should use RentX cost-of-living information.",
+              path: "/disclaimer/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }
