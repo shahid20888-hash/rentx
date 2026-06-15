@@ -39,24 +39,40 @@ export default function HomePage() {
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-      <BubbleCard as="section" className="space-y-6 px-5 py-10 sm:px-8">
-        <div className="space-y-6">
-          <div className="space-y-3">
-            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+      <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
+        {/* Background Hero Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/homepage-hero.png"
+            alt="US Metro Skyline twilight"
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E2A23] via-[#0E2A23]/95 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A23] via-transparent to-transparent" />
+        </div>
+        
+        <div className="relative z-10 space-y-6 px-6 py-12 sm:px-10 sm:py-16 max-w-3xl">
+          <div className="space-y-4">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-secondary bg-brand-secondary/15 px-3 py-1.5 rounded-lg border border-brand-secondary/20">
+              Welcome to RentX
+            </span>
+            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white leading-tight">
               Understand what it costs to live in your next city.
             </h1>
-            <p className="max-w-2xl text-sm">
-              RentX provides clear cost-of-living comparisons for cities and states, so you can plan moves and budgets with confidence.
+            <p className="text-sm sm:text-base text-brand-muted/95 leading-relaxed">
+              RentX provides clear, data-driven cost-of-living comparisons for cities and states across the US, so you can plan moves and budget with confidence.
             </p>
-            <p className="text-xs text-brand-muted">
-              Last updated: {lastUpdated}. Read our{" "}
-              <Link href="/editorial-policy" className="underline hover:text-brand-text">Editorial Policy</Link>{" "}
-              and <Link href="/disclaimer" className="underline hover:text-brand-text">Disclaimer</Link>.
-            </p>
+            <div className="flex items-center gap-3 text-xs text-brand-muted/70">
+              <span>Last updated: {lastUpdated}</span>
+              <span>&bull;</span>
+              <Link href="/editorial-policy" className="hover:text-brand-accent underline">Editorial Policy</Link>
+              <span>&bull;</span>
+              <Link href="/disclaimer" className="hover:text-brand-accent underline">Disclaimer</Link>
+            </div>
           </div>
-          <div className="max-w-xl"><SearchBar /></div>
+          <div className="max-w-xl pt-2"><SearchBar /></div>
         </div>
-      </BubbleCard>
+      </div>
 
       <section aria-label="Popular cities" className="space-y-4">
         <div className="flex items-center justify-between gap-2">
