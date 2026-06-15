@@ -27,6 +27,10 @@ cp .env.example .env.local
 Available variable:
 
 - `NEXT_PUBLIC_SITE_URL` - public site URL such as `https://your-domain.com`
+- `NEXT_PUBLIC_ADSENSE_CLIENT` - AdSense publisher ID (default: `ca-pub-3635656048122177`)
+
+## AdSense & ads.txt
+The root of the domain serves the required AdSense publisher authorization file at `public/ads.txt`. The publisher ID defined in `public/ads.txt` must match the `NEXT_PUBLIC_ADSENSE_CLIENT` environment variable and the active AdSense account to ensure correct ad delivery.
 
 ## Local development
 
