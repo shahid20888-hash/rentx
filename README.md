@@ -58,3 +58,40 @@ This repo already includes `netlify.toml` with the Next.js Netlify plugin enable
 
 - Build command: `npm run build`
 - Publish directory: `.next`
+
+## Pre-Launch SEO Audit
+
+RentX includes an automated pre-launch SEO audit script to validate sitemaps, titles, meta descriptions, canonical URLs, headers, robots directives, internal links, structured data (JSON-LD schemas), ads.txt, and AdSense script tags.
+
+The script runs locally and crawls the statically generated pages in the production build directory (`.next/server/app`).
+
+### How to Run the Audit
+
+1. **Compile the production build:**
+   ```bash
+   npm run build
+   ```
+
+2. **Execute the SEO audit script:**
+   ```bash
+   npm run seo:audit
+   ```
+
+### Output Format
+
+- If all validations pass, the script outputs:
+  ```
+  ✅ STATUS: PASSED! All SEO validations completed successfully.
+  ```
+  And exits with code `0`.
+
+- If issues are detected, the script lists each issue with its type, affected route, and a suggested fix, for example:
+  ```
+  ❌ STATUS: FAILED with 1 audit issues.
+
+  [1] Issue: MISSING ADS.TXT
+      Route: /ads.txt
+      Fix:   Create a public ads.txt file under the public directory.
+  --------------------------------------------------
+  ```
+  And exits with code `1`, allowing it to block failing builds or deployments in CI/CD environments.
