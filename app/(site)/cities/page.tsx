@@ -7,7 +7,7 @@ import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Cities",
+  title: "Cost of Living Index by US City",
   description: "Browse US cities and compare cost-of-living breakdowns.",
   path: "/cities/"
 });

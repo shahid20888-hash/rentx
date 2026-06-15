@@ -52,13 +52,22 @@ export function buildMetadata({
   path,
   imagePath
 }: BuildMetadataArgs = {}): Metadata {
-  const normalizedPath = path ?? "/";
-  const url = new URL(normalizedPath, SITE_URL);
-  const metaDescription = normalizeDescription(description ?? DEFAULT_DESCRIPTION, normalizedPath);
-  const canonical = url.pathname.endsWith("/") ? url.toString() : `${url.toString()}/`;
-  const safeTitle = clampTitle(title);
+  // Safeguards against empty/whitespace titles and descriptions
+  const cleanTitle = title && title.trim() !== "" ? title.trim() : undefined;
+  const cleanDescription = description && description.trim() !== "" ? description.trim() : DEFAULT_DESCRIPTION;
+  const cleanPath = path && path.trim() !== "" ? path.trim() : "/";
 
-  const fullTitle = title
+  // Ensure path starts with slash
+  const urlPath = cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`;
+
+  // Ensure absolute canonical formatting ending with trailing slash
+  const url = new URL(urlPath, SITE_URL);
+  const canonical = url.pathname.endsWith("/") ? url.toString() : `${url.toString()}/`;
+
+  const metaDescription = normalizeDescription(cleanDescription, urlPath);
+  const safeTitle = clampTitle(cleanTitle);
+
+  const fullTitle = cleanTitle
     ? `${safeTitle} | ${SITE_NAME}`
     : `${SITE_NAME} - Cost of Living in US Cities & States`;
   const resolvedImage = imagePath ?? "/logo-rentx.png";
