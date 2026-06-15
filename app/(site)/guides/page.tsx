@@ -24,15 +24,23 @@ export default function GuidesPage() {
   return (
     <div className="space-y-8">
       {/* Premium Hero Banner */}
-      <BubbleCard as="header" className="relative overflow-hidden p-8 sm:p-10 rounded-3xl border border-white/[0.08] bg-gradient-to-r from-brand-bg via-[#11322a] to-brand-bg shadow-xl">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-24 h-24 bg-brand-accent/5 rounded-full blur-2xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-brand-bg shadow-xl">
+        {/* Background Hero Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/guides-hero.png"
+            alt="RentX Cost of Living Guides Library"
+            className="w-full h-full object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E2A23] via-[#0E2A23]/95 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A23] via-transparent to-transparent" />
+        </div>
         
-        <div className="relative space-y-4 max-w-3xl">
+        <div className="relative z-10 space-y-4 px-6 py-12 sm:px-10 sm:py-16 max-w-3xl">
           <span className="text-[10px] font-bold uppercase tracking-widest text-brand-secondary bg-brand-secondary/15 px-3 py-1.5 rounded-lg border border-brand-secondary/20">
             RentX Academy
           </span>
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white leading-tight">
             Cost of Living Guides
           </h1>
           <p className="text-sm sm:text-base text-brand-muted/95 leading-relaxed">
@@ -44,7 +52,7 @@ export default function GuidesPage() {
             <span>Last updated: {lastUpdated}</span>
           </div>
         </div>
-      </BubbleCard>
+      </div>
 
       {/* Interactive Grid Component */}
       <GuidesGrid guides={guides} />
