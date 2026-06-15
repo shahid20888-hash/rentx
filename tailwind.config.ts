@@ -23,6 +23,9 @@ const config: Config = {
           accent: "#D29A6A",
           accentHover: "#B8734C"
         }
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"]
       }
     }
   },

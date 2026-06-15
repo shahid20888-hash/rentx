@@ -19,6 +19,8 @@ import { primaryButtonClass } from "@/components/ui/Button";
 import { SeoLongform } from "@/components/SeoLongform";
 import { buildCitySeoLongform } from "@/lib/seoLongformContent";
 
+export const dynamicParams = false;
+
 type CityPageProps = {
   params: Promise<{
     city: string;

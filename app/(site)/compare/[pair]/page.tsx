@@ -11,6 +11,8 @@ import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { SeoLongform } from "@/components/SeoLongform";
 import { buildCompareSeoLongform } from "@/lib/seoLongformContent";
 
+export const dynamicParams = false;
+
 type ComparePairPageProps = {
   params: Promise<{ pair: string }>;
 };

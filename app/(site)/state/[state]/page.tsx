@@ -15,6 +15,8 @@ import { SeoLongform } from "@/components/SeoLongform";
 import { buildStateSeoLongform } from "@/lib/seoLongformContent";
 import { statePageSchema, breadcrumbSchema } from "@/lib/schema";
 
+export const dynamicParams = false;
+
 type StatePageProps = {
   params: Promise<{
     state: string;

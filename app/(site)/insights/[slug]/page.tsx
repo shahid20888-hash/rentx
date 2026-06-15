@@ -10,6 +10,8 @@ import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { getInsightBySlug, INSIGHTS } from "@/lib/insights";
 import { resolveArticleDateLabel } from "@/lib/date";
 
+export const dynamicParams = false;
+
 type InsightPageProps = {
   params: Promise<{
     slug: string;

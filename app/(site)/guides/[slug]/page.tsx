@@ -9,6 +9,8 @@ import { getCities, getStates } from "@/lib/data";
 import { BubbleCard } from "@/components/BubbleCard";
 import { resolveArticleDateLabel } from "@/lib/date";
 
+export const dynamicParams = false;
+
 type GuidePageProps = {
   params: Promise<{
     slug: string;
