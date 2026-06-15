@@ -8,6 +8,8 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { primaryButtonClass } from "@/components/ui/Button";
 import { LeadForm } from "@/components/LeadForm";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
+import { SeoLongform } from "@/components/SeoLongform";
+import { buildCompareSeoLongform } from "@/lib/seoLongformContent";
 
 type ComparePairPageProps = {
   params: Promise<{ pair: string }>;
@@ -50,6 +52,8 @@ export default async function ComparePairPage({ params }: ComparePairPageProps) 
   if (!from || !to) {
     notFound();
   }
+
+  const seoLongform = buildCompareSeoLongform(from, to);
 
   const overallDiff = to.indices.overall - from.indices.overall;
   const rentDiff = Math.round(((to.indices.rent - from.indices.rent) / from.indices.rent) * 100);
@@ -193,6 +197,9 @@ export default async function ComparePairPage({ params }: ComparePairPageProps) 
         </BubbleCard>
         <LeadForm city={from.slug} state={from.stateCode} compact />
       </section>
+      
+      <SeoLongform {...seoLongform} />
+
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
