@@ -31,6 +31,7 @@ export const GUIDES: GuideDefinition[] = [
       date: "2026-06-15",
       updatedAt: "2026-06-15",
       author: "Shahid Saleem",
+      coverImage: "/images/insights/rent-affordability-75000-salary-2026.webp",
       toc: [
         { id: "quick-answer", label: "Quick answer" },
         { id: "the-30-rent-rule-on-a-75k-salary", label: "The 30% rent rule on a $75K salary" },
@@ -54,6 +55,7 @@ export const GUIDES: GuideDefinition[] = [
         "A human guide to what cost-of-living indices actually mean and how to use them in real life.",
       date: "2025-01-10",
       updatedAt: "2026-02-28",
+      coverImage: "/images/insights/cost-of-living-index-explained.webp",
       toc: [
         { id: "in-this-guide", label: "In this guide" },
         { id: "what-a-cost-of-living-index-actually-measures", label: "What a cost-of-living index measures" },
@@ -74,6 +76,7 @@ export const GUIDES: GuideDefinition[] = [
         "A friendly checklist to keep your next move organized, from research to unpacking.",
       date: "2025-02-05",
       updatedAt: "2026-02-28",
+      coverImage: "/images/insights/hidden-costs-moving-states.webp",
       toc: [
         { id: "in-this-guide", label: "In this guide" },
         { id: "step-1-early-research-and-budgeting", label: "Step 1: Research and budgeting" },
@@ -93,6 +96,7 @@ export const GUIDES: GuideDefinition[] = [
       description: "A calm, practical look at when renting or buying might make more sense for you.",
       date: "2025-03-12",
       updatedAt: "2026-02-28",
+      coverImage: "/images/insights/rent-vs-buy-2026-full-breakdown.webp",
       toc: [
         { id: "in-this-guide", label: "In this guide" },
         { id: "the-case-for-renting", label: "The case for renting" },
