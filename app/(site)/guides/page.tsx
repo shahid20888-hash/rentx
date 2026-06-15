@@ -5,6 +5,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { GuidesGrid } from "@/components/GuidesGrid";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Cost of living guides",
@@ -58,6 +59,18 @@ export default function GuidesPage() {
       <GuidesGrid guides={guides} />
 
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Cost of living guides",
+              description: "Practical guides for reading cost-of-living data and planning moves.",
+              path: "/guides/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

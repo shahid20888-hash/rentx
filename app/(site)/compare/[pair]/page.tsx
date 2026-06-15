@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { BubbleCard } from "@/components/BubbleCard";
 import { primaryButtonClass } from "@/components/ui/Button";
 import { LeadForm } from "@/components/LeadForm";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 
 type ComparePairPageProps = {
   params: Promise<{ pair: string }>;
@@ -192,6 +193,32 @@ export default async function ComparePairPage({ params }: ComparePairPageProps) 
         </BubbleCard>
         <LeadForm city={from.slug} state={from.stateCode} compact />
       </section>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: `${from.cityName}, ${from.stateCode} vs ${to.cityName}, ${to.stateCode} Cost of Living Comparison`,
+              description: `Compare cost of living, rent, home prices, utility bills, grocery costs, transportation, and healthcare between ${from.cityName}, ${from.stateCode} and ${to.cityName}, ${to.stateCode}.`,
+              path: `/compare/${pair}/`
+            })
+          )
+        }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "Compare", url: "/compare/" },
+              { name: `${from.cityName} vs ${to.cityName}`, url: `/compare/${pair}/` }
+            ])
+          )
+        }}
+      />
     </div>
   );
 }

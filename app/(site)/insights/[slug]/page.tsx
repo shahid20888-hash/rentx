@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { BubbleCard } from "@/components/BubbleCard";
 import { FAQ } from "@/components/FAQ";
 import { buildMetadata } from "@/lib/seo";
-import { articleSchema } from "@/lib/schema";
+import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { getInsightBySlug, INSIGHTS } from "@/lib/insights";
 import { resolveArticleDateLabel } from "@/lib/date";
 
@@ -54,6 +54,7 @@ export default async function InsightDetailPage({ params }: InsightPageProps) {
     description: insight.meta.description,
     slug: insight.slug,
     datePublished: insight.meta.date,
+    dateModified: insight.meta.updatedAt,
     section: "insights"
   });
 
@@ -130,6 +131,24 @@ export default async function InsightDetailPage({ params }: InsightPageProps) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "Insights", url: "/insights/" },
+              { name: insight.meta.title, url: `/insights/${insight.slug}/` }
+            ])
+          )
+        }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqItems)) }}
       />
     </div>
   );

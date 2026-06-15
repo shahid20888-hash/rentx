@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GUIDES, getGuideBySlug } from "@/lib/guides";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { articleSchema } from "@/lib/schema";
+import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { getCities, getStates } from "@/lib/data";
 import { BubbleCard } from "@/components/BubbleCard";
@@ -55,7 +55,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
     title: guide.meta.title,
     description: guide.meta.description,
     slug: guide.slug,
-    datePublished: guide.meta.date
+    datePublished: guide.meta.date,
+    dateModified: guide.meta.updatedAt
   });
 
   return (
@@ -148,6 +149,19 @@ export default async function GuidePage({ params }: GuidePageProps) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "Guides", url: "/guides/" },
+              { name: guide.meta.title, url: `/guides/${guide.slug}/` }
+            ])
+          )
+        }}
       />
     </div>
   );

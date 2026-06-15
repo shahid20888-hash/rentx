@@ -5,6 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Cost of Living Index by US City",
@@ -58,6 +59,18 @@ export default function CitiesPage() {
       </section>
 
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Cost of Living Index by US City",
+              description: "Browse US cities and compare cost-of-living breakdowns.",
+              path: "/cities/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

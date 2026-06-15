@@ -33,8 +33,40 @@ export function breadcrumbSchema(items: BreadcrumbItem[]) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url
+      item: item.url.startsWith("http")
+        ? item.url
+        : `${SITE_URL}${item.url.startsWith("/") ? item.url : `/${item.url}`}`
     }))
+  };
+}
+
+export function webPageSchema({
+  name,
+  description,
+  path,
+  type = "WebPage"
+}: {
+  name: string;
+  description: string;
+  path: string;
+  type?: string;
+}) {
+  const url = `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    name,
+    description,
+    url,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo-rentx.png`
+      }
+    }
   };
 }
 

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 type FindAProPageProps = {
   searchParams?: Promise<{
@@ -188,6 +189,18 @@ export default async function FindAProPage({ searchParams }: FindAProPageProps) 
       </section>
 
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Find a Local Real Estate Pro",
+              description: "Request help from local real estate professionals by city.",
+              path: "/find-a-pro/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

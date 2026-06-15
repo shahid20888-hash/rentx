@@ -5,6 +5,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { ContactForm } from "@/components/ContactForm";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -89,6 +90,19 @@ export default function ContactPage() {
       </div>
 
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Contact RentX",
+              description: "Get in touch with the RentX team for inquiries, feedback, or support.",
+              path: "/contact/",
+              type: "ContactPage"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

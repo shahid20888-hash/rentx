@@ -6,6 +6,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { Badge } from "@/components/ui/Badge";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Compare city cost of living",
@@ -74,6 +75,18 @@ export default function ComparePage() {
         </div>
       </BubbleCard>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "Compare City Cost of Living",
+              description: "Compare two cities side by side using cost-of-living indices.",
+              path: "/compare/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

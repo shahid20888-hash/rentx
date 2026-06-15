@@ -5,6 +5,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { InsightsGrid } from "@/components/InsightsGrid";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "Insights",
@@ -58,6 +59,18 @@ export default function InsightsPage() {
       <InsightsGrid insights={insights} />
 
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "RentX Insights & Analysis",
+              description: "Read in-depth US cost-of-living insights, methods, and planning guides.",
+              path: "/insights/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

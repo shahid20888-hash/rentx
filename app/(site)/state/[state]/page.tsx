@@ -13,7 +13,7 @@ import { InternalLinks } from "@/components/InternalLinks";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { buildStateSeoLongform } from "@/lib/seoLongformContent";
-import { statePageSchema } from "@/lib/schema";
+import { statePageSchema, breadcrumbSchema } from "@/lib/schema";
 
 type StatePageProps = {
   params: Promise<{
@@ -142,6 +142,19 @@ export default async function StatePage({ params }: StatePageProps) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(stateSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "States", url: "/states/" },
+              { name: state.name, url: `/state/${state.slug}/` }
+            ])
+          )
+        }}
       />
     </div>
   );

@@ -4,6 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { webPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = buildMetadata({
   title: "About RentX",
@@ -117,6 +118,18 @@ export default function AboutPage() {
         </div>
       </div>
       <SeoLongform {...seoLongform} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            webPageSchema({
+              name: "About RentX",
+              description: "Learn how RentX approaches cost-of-living data and independent editorial standards.",
+              path: "/about/"
+            })
+          )
+        }}
+      />
     </div>
   );
 }

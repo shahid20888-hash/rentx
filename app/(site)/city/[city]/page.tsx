@@ -6,7 +6,7 @@ import { Callout } from "@/components/Callout";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FAQ } from "@/components/FAQ";
-import { cityPageSchema } from "@/lib/schema";
+import { cityPageSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { StatPills } from "@/components/StatPills";
 import { CostBreakdownTable } from "@/components/CostBreakdownTable";
 import { BudgetEstimator } from "@/components/BudgetEstimator";
@@ -242,6 +242,24 @@ export default async function CityPage({ params }: CityPageProps) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(citySchema) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "Cities", url: "/cities/" },
+              { name: `${city.cityName}, ${city.stateCode}`, url: `/city/${city.slug}/` }
+            ])
+          )
+        }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
       />
     </div>
   );
