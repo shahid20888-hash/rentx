@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 export const SITE_NAME = "RentX";
 const DEFAULT_SITE_URL = "https://rentx.us";
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 
 function resolveSiteUrl() {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -62,7 +63,7 @@ export function buildMetadata({
     : `${SITE_NAME} - Cost of Living in US Cities & States`;
   const resolvedImage = imagePath ?? "/logo-rentx.png";
 
-  return {
+  const metadata: Metadata = {
     title: {
       default: fullTitle,
       template: `%s | ${SITE_NAME}`
@@ -100,6 +101,14 @@ export function buildMetadata({
       images: [resolvedImage]
     }
   };
+
+  if (GOOGLE_SITE_VERIFICATION) {
+    metadata.verification = {
+      google: GOOGLE_SITE_VERIFICATION
+    };
+  }
+
+  return metadata;
 }
 
 export const defaultMetadata: Metadata = buildMetadata();
