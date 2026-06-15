@@ -15,11 +15,26 @@ type FindAProPageProps = {
   }>;
 };
 
-export const metadata: Metadata = buildMetadata({
-  title: "Find a local real estate pro",
-  description: "Request help from local real estate professionals by city.",
-  path: "/find-a-pro/"
-});
+export async function generateMetadata({ searchParams }: FindAProPageProps): Promise<Metadata> {
+  const resolvedSearchParams = await searchParams;
+  const baseMeta = buildMetadata({
+    title: "Find a local real estate pro",
+    description: "Request help from local real estate professionals by city.",
+    path: "/find-a-pro/"
+  });
+
+  if (resolvedSearchParams?.city || resolvedSearchParams?.intent) {
+    return {
+      ...baseMeta,
+      robots: {
+        index: false,
+        follow: true
+      }
+    };
+  }
+
+  return baseMeta;
+}
 
 export default async function FindAProPage({ searchParams }: FindAProPageProps) {
   const resolvedSearchParams = await searchParams;
