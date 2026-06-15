@@ -122,11 +122,7 @@ export default function HomePage() {
 
       <CompareWidget cities={cities} />
 
-      <section aria-label="Sponsored content area" className="space-y-2">
-        <h2 className="text-sm font-semibold">Advertisement</h2>
-        <p className="text-xs text-brand-muted">
-          Ads help support independent research content. We keep ad placements limited for a better reading experience.
-        </p>
+      <section aria-label="Sponsored content area">
         <AdSlot
           adClient="ca-pub-3635656048122177"
           adSlot="1234567890"

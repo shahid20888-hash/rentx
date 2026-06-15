@@ -107,51 +107,63 @@ export function AdSlot({
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl">
-      {/* 1. FALLBACK PROMOTION CONTAINER (Shown when loading or unfilled) */}
-      {adStatus !== "filled" && (
-        <div
-          className={`flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 sm:p-8 rounded-2xl border ${promo.colorTheme} shadow-md transition-all duration-300`}
-        >
-          <div className="space-y-3 max-w-2xl relative z-10">
-            <span className="inline-flex items-center rounded-full bg-[#C78B5E]/10 border border-[#C78B5E]/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#C78B5E]">
-              {promo.badge}
-            </span>
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight leading-snug">
-              {promo.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
-              {promo.description}
-            </p>
-          </div>
-          <div className="flex items-center shrink-0 relative z-10">
-            <Link
-              href={promo.link as any}
-              className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/10 bg-[#C78B5E] px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#0E2A23] shadow-[0_4px_12px_rgba(199,139,94,0.15)] transition hover:bg-[#B8734C] hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C78B5E]/40"
-            >
-              {promo.btnText}
-            </Link>
-          </div>
-          {/* Decorative Glow */}
-          <div className="absolute -right-10 -bottom-10 w-40 h-40 rounded-full bg-[#C78B5E]/5 blur-3xl pointer-events-none" />
+    <div className="space-y-4 w-full">
+      {/* Advertisement Header & Disclosure (Shown only if actual ad is filled) */}
+      {adStatus === "filled" && (
+        <div className="space-y-2">
+          <h2 className="text-sm font-semibold text-brand-primary">Advertisement</h2>
+          <p className="text-xs text-brand-muted">
+            Ads help support independent research content. We keep ad placements limited for a better reading experience.
+          </p>
         </div>
       )}
 
-      {/* 2. GOOGLE ADSENSE ELEMENT */}
-      {/* Rendered in DOM from mount so AdSense script detects it, but styled as collapsed if unfilled */}
-      <ins
-        ref={insRef}
-        className={`adsbygoogle ${
-          adStatus === "filled"
-            ? "block w-full min-h-[120px] bg-brand-surface border border-brand-border rounded-2xl p-3"
-            : "absolute opacity-0 pointer-events-none -z-10 w-full h-[120px] top-0 left-0"
-        }`}
-        style={{ display: "block" }}
-        data-ad-client={adClient}
-        data-ad-slot={adSlot}
-        data-ad-format={adFormat}
-        data-full-width-responsive={fullWidthResponsive}
-      />
+      <div className="relative w-full overflow-hidden rounded-2xl">
+        {/* 1. FALLBACK PROMOTION CONTAINER (Shown when loading or unfilled) */}
+        {adStatus !== "filled" && (
+          <div
+            className={`flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 sm:p-8 rounded-2xl border ${promo.colorTheme} shadow-md transition-all duration-300`}
+          >
+            <div className="space-y-3 max-w-2xl relative z-10">
+              <span className="inline-flex items-center rounded-full bg-[#C78B5E]/10 border border-[#C78B5E]/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#C78B5E]">
+                {promo.badge}
+              </span>
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight leading-snug">
+                {promo.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
+                {promo.description}
+              </p>
+            </div>
+            <div className="flex items-center shrink-0 relative z-10">
+              <Link
+                href={promo.link as any}
+                className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/10 bg-[#C78B5E] px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#0E2A23] shadow-[0_4px_12px_rgba(199,139,94,0.15)] transition hover:bg-[#B8734C] hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C78B5E]/40"
+              >
+                {promo.btnText}
+              </Link>
+            </div>
+            {/* Decorative Glow */}
+            <div className="absolute -right-10 -bottom-10 w-40 h-40 rounded-full bg-[#C78B5E]/5 blur-3xl pointer-events-none" />
+          </div>
+        )}
+
+        {/* 2. GOOGLE ADSENSE ELEMENT */}
+        {/* Rendered in DOM from mount so AdSense script detects it, but styled as collapsed if unfilled */}
+        <ins
+          ref={insRef}
+          className={`adsbygoogle ${
+            adStatus === "filled"
+              ? "block w-full min-h-[120px] bg-brand-surface border border-brand-border rounded-2xl p-3"
+              : "absolute opacity-0 pointer-events-none -z-10 w-full h-[120px] top-0 left-0"
+          }`}
+          style={{ display: "block" }}
+          data-ad-client={adClient}
+          data-ad-slot={adSlot}
+          data-ad-format={adFormat}
+          data-full-width-responsive={fullWidthResponsive}
+        />
+      </div>
     </div>
   );
 }
