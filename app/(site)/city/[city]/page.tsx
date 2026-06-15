@@ -74,6 +74,32 @@ export default async function CityPage({ params }: CityPageProps) {
   }));
   const seoLongform = buildCitySeoLongform(city, state, nearby);
 
+  const relatedArticles: { title: string; href: string }[] = [];
+  if (city.slug === "dallas-tx") {
+    relatedArticles.push({
+      title: "Salary Needed to Live Comfortably in Dallas, TX in 2026",
+      href: "/insights/salary-needed-to-live-comfortably-in-dallas-tx-2026/"
+    });
+  }
+  if (city.slug === "houston-tx") {
+    relatedArticles.push({
+      title: "Houston Cost of Living for a Family of Four in 2026",
+      href: "/insights/houston-cost-of-living-family-of-four-2026/"
+    });
+  }
+  if (city.slug === "los-angeles-ca" || city.slug === "san-francisco-ca") {
+    relatedArticles.push({
+      title: "California to Texas Moving Cost in 2026: Budget, Hidden Fees, and City Checks",
+      href: "/insights/california-to-texas-moving-cost-2026/"
+    });
+  }
+  if (["chicago-il", "phoenix-az", "dallas-tx", "los-angeles-ca"].includes(city.slug)) {
+    relatedArticles.push({
+      title: "How Much Rent Can I Afford on $75K a Year in 2026?",
+      href: "/guides/how-much-rent-can-i-afford-75000-salary/"
+    });
+  }
+
   const faqs = [
     {
       question: `What does the overall cost-of-living index for ${city.cityName} mean?`,
@@ -189,6 +215,26 @@ export default async function CityPage({ params }: CityPageProps) {
       </section>
 
       <FAQ items={faqs} />
+
+      {relatedArticles.length > 0 && (
+        <section aria-label="Related insights" className="space-y-3">
+          <h2 className="text-sm font-semibold text-brand-primary">Related articles & guides</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {relatedArticles.map((art) => (
+              <BubbleCard key={art.href} className="p-5 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm font-semibold text-brand-primary mb-2">{art.title}</h3>
+                </div>
+                <div className="mt-3">
+                  <Link href={art.href as any} className={primaryButtonClass}>
+                    Read article -&gt;
+                  </Link>
+                </div>
+              </BubbleCard>
+            ))}
+          </div>
+        </section>
+      )}
 
       <SeoLongform {...seoLongform} />
 

@@ -1,6 +1,7 @@
 import CostOfLivingBasics from "@/content/guides/cost-of-living-basics.mdx";
 import MovingChecklist from "@/content/guides/moving-checklist.mdx";
 import RentVsBuy from "@/content/guides/rent-vs-buy.mdx";
+import HowMuchRentCanIAfford75000Salary from "@/content/guides/how-much-rent-can-i-afford-75000-salary.mdx";
 
 export type GuideMeta = {
   slug: string;
@@ -21,6 +22,29 @@ export type GuideDefinition = {
 };
 
 export const GUIDES: GuideDefinition[] = [
+  {
+    slug: "how-much-rent-can-i-afford-75000-salary",
+    meta: {
+      slug: "how-much-rent-can-i-afford-75000-salary",
+      title: "How Much Rent Can I Afford on $75K a Year in 2026?",
+      description: "See how much rent you can afford on a $75K salary in 2026 using the 30% rule, take-home pay, utilities, savings, and city cost differences.",
+      date: "2026-06-15",
+      updatedAt: "2026-06-15",
+      author: "Shahid Saleem",
+      toc: [
+        { id: "quick-answer", label: "Quick answer" },
+        { id: "the-30-rent-rule-on-a-75k-salary", label: "The 30% rent rule on a $75K salary" },
+        { id: "why-take-home-pay-matters-more-than-gross-salary", label: "Why take-home pay matters more than gross salary" },
+        { id: "rent-plus-utilities-the-number-most-people-forget", label: "Rent plus utilities: the number most people forget" },
+        { id: "example-budgets-in-affordable-average-and-expensive-cities", label: "Example budgets in affordable, average, and expensive cities" },
+        { id: "when-75k-feels-comfortable", label: "When $75K feels comfortable" },
+        { id: "when-75k-feels-tight", label: "When $75K feels tight" },
+        { id: "how-to-compare-cities-before-signing-a-lease", label: "How to compare cities before signing a lease" },
+        { id: "faq", label: "FAQ" }
+      ]
+    },
+    Component: HowMuchRentCanIAfford75000Salary
+  },
   {
     slug: "cost-of-living-basics",
     meta: {

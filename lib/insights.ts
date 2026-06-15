@@ -14,6 +14,11 @@ import ExpensiveCities from "@/content/insights/most-expensive-us-cities-analysi
 import RelocationTemplate from "@/content/insights/relocation-budget-template.mdx";
 import InflationImpact from "@/content/insights/inflation-impact-on-cost-of-living.mdx";
 
+import CaliforniaToTexasMovingCost2026 from "@/content/insights/california-to-texas-moving-cost-2026.mdx";
+import SalaryNeededToLiveComfortablyInDallasTx2026 from "@/content/insights/salary-needed-to-live-comfortably-in-dallas-tx-2026.mdx";
+import HoustonCostOfLivingFamilyOfFour2026 from "@/content/insights/houston-cost-of-living-family-of-four-2026.mdx";
+import MonthlyCostOfLivingSinglePersonUs2026 from "@/content/insights/monthly-cost-of-living-single-person-us-2026.mdx";
+
 export type InsightMeta = {
   slug: string;
   title: string;
@@ -34,6 +39,66 @@ export type InsightDefinition = {
 };
 
 export const INSIGHTS: InsightDefinition[] = [
+  {
+    slug: "california-to-texas-moving-cost-2026",
+    meta: {
+      slug: "california-to-texas-moving-cost-2026",
+      title: "California to Texas Moving Cost in 2026: Budget, Hidden Fees, and City Checks",
+      description: "Plan a California to Texas move in 2026 with realistic moving costs, hidden fees, rent differences, setup expenses, and city checks for Austin, Dallas, and Houston.",
+      date: "2026-06-15",
+      updatedAt: "2026-06-15",
+      author: "Shahid Saleem",
+      coverImage: "/images/insights/california-to-texas-moving-cost-2026.webp",
+      coverAlt: "Moving boxes and a budget checklist for a California to Texas relocation",
+      coverCaption: "Understanding the true cost of relocating from California to Texas in 2026 requires looking at transport, housing transitions, and local tax shifts."
+    },
+    Component: CaliforniaToTexasMovingCost2026
+  },
+  {
+    slug: "salary-needed-to-live-comfortably-in-dallas-tx-2026",
+    meta: {
+      slug: "salary-needed-to-live-comfortably-in-dallas-tx-2026",
+      title: "Salary Needed to Live Comfortably in Dallas, TX in 2026",
+      description: "Estimate the salary needed to live comfortably in Dallas, TX in 2026, including rent, utilities, groceries, transport, healthcare, and savings.",
+      date: "2026-06-15",
+      updatedAt: "2026-06-15",
+      author: "Shahid Saleem",
+      coverImage: "/images/insights/salary-needed-dallas-tx-2026.webp",
+      coverAlt: "Monthly salary and rent planning for Dallas Texas",
+      coverCaption: "Determining a comfortable salary in Dallas in 2026 requires balancing rising rents, transportation needs, and savings goals."
+    },
+    Component: SalaryNeededToLiveComfortablyInDallasTx2026
+  },
+  {
+    slug: "houston-cost-of-living-family-of-four-2026",
+    meta: {
+      slug: "houston-cost-of-living-family-of-four-2026",
+      title: "Houston Cost of Living for a Family of Four in 2026",
+      description: "See what a family of four may need for housing, groceries, utilities, healthcare, transportation, and savings in Houston in 2026.",
+      date: "2026-06-15",
+      updatedAt: "2026-06-15",
+      author: "Shahid Saleem",
+      coverImage: "/images/insights/houston-family-cost-of-living-2026.webp",
+      coverAlt: "Family budget planning for Houston Texas cost of living",
+      coverCaption: "Houston offers families high affordability, but managing summer electric bills and commuter costs is key to budgeting."
+    },
+    Component: HoustonCostOfLivingFamilyOfFour2026
+  },
+  {
+    slug: "monthly-cost-of-living-single-person-us-2026",
+    meta: {
+      slug: "monthly-cost-of-living-single-person-us-2026",
+      title: "Monthly Cost of Living for a Single Person in the U.S. in 2026",
+      description: "Estimate monthly cost of living for a single person in the U.S. in 2026, including rent, food, utilities, transportation, healthcare, and savings.",
+      date: "2026-06-15",
+      updatedAt: "2026-06-15",
+      author: "Shahid Saleem",
+      coverImage: "/images/insights/single-person-monthly-cost-of-living-us-2026.webp",
+      coverAlt: "Single person monthly cost of living budget in the United States",
+      coverCaption: "Living alone in the U.S. in 2026 requires careful budgeting across fixed costs like rent and variable costs like transport."
+    },
+    Component: MonthlyCostOfLivingSinglePersonUs2026
+  },
   {
     slug: "complete-guide-us-cost-of-living",
     meta: {
@@ -294,5 +359,13 @@ export const INSIGHTS: InsightDefinition[] = [
 export function getInsightBySlug(slug: string): InsightDefinition | undefined {
   return INSIGHTS.find((insight) => insight.slug === slug);
 }
+
+export function getLatestInsights(limit = 3): InsightMeta[] {
+  return [...INSIGHTS]
+    .sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1))
+    .slice(0, limit)
+    .map((insight) => insight.meta);
+}
+
 
 

@@ -3,6 +3,7 @@ import Script from "next/script";
 import type { Metadata } from "next";
 import { getCities, getStates } from "@/lib/data";
 import { getLatestGuides } from "@/lib/guides";
+import { getLatestInsights } from "@/lib/insights";
 import { CityCard } from "@/components/CityCard";
 import { StateCard } from "@/components/StateCard";
 import { SearchBar } from "@/components/SearchBar";
@@ -25,6 +26,7 @@ export default function HomePage() {
   const popularCities = cities.slice(0, 12);
   const popularStates = states.slice(0, 12);
   const latestGuides = getLatestGuides(3);
+  const latestInsights = getLatestInsights(3);
   const seoLongform = getStaticSeoLongformContent("home");
   const lastUpdated = "April 27, 2026";
 
@@ -145,6 +147,88 @@ export default function HomePage() {
             </BubbleCard>
           ))}
         </div>
+      </section>
+
+      <section aria-label="Latest insights" className="space-y-6">
+        <div className="flex items-center justify-between gap-2">
+          <div>
+            <h2 className="text-sm font-semibold">Latest insights</h2>
+          </div>
+          <Link href="/insights" className="text-xs font-medium text-brand-text hover:text-brand-text hover:underline">
+            View all insights -&gt;
+          </Link>
+        </div>
+
+        {/* Featured Insight Card (Newest) */}
+        {latestInsights.length > 0 && (
+          <BubbleCard as="article" className="overflow-hidden p-0 rounded-3xl border border-brand-border bg-brand-surface">
+            <div className="grid gap-6 md:grid-cols-[1.2fr_1fr] items-stretch">
+              <div className="relative min-h-[220px] md:min-h-full overflow-hidden">
+                <img
+                  src={latestInsights[0].coverImage}
+                  alt={latestInsights[0].coverAlt}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                />
+              </div>
+              <div className="flex flex-col justify-between p-6 sm:p-8 space-y-4">
+                <div className="space-y-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-[#C78B5E] bg-[#C78B5E]/10 px-2.5 py-1 rounded-full">
+                    Featured Insight
+                  </span>
+                  <h3 className="text-lg font-semibold tracking-tight sm:text-xl text-brand-text">
+                    {latestInsights[0].title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-brand-muted line-clamp-3">
+                    {latestInsights[0].description}
+                  </p>
+                </div>
+                <div className="pt-2 flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-[11px] text-brand-muted">
+                    By {latestInsights[0].author ?? "Shahid Saleem"} &bull; {latestInsights[0].date}
+                  </span>
+                  <Link href={`/insights/${latestInsights[0].slug}`} className={primaryButtonClass}>
+                    Read article -&gt;
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </BubbleCard>
+        )}
+
+        {/* Recent Insights Grid (Remaining 2) */}
+        {latestInsights.length > 1 && (
+          <div className="grid gap-6 sm:grid-cols-2">
+            {latestInsights.slice(1, 3).map((insight) => (
+              <BubbleCard key={insight.slug} as="article" className="overflow-hidden p-0 rounded-2xl flex flex-col justify-between border border-brand-border bg-brand-surface">
+                <div className="relative h-[160px] overflow-hidden">
+                  <img
+                    src={insight.coverImage}
+                    alt={insight.coverAlt}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-semibold tracking-tight text-brand-text line-clamp-2">
+                      {insight.title}
+                    </h3>
+                    <p className="text-xs text-brand-muted line-clamp-2">
+                      {insight.description}
+                    </p>
+                  </div>
+                  <div className="pt-2 flex items-center justify-between">
+                    <span className="text-[10px] text-brand-muted">
+                      {insight.date}
+                    </span>
+                    <Link href={`/insights/${insight.slug}`} className={primaryButtonClass}>
+                      Read article -&gt;
+                    </Link>
+                  </div>
+                </div>
+              </BubbleCard>
+            ))}
+          </div>
+        )}
       </section>
 
       <SeoLongform {...seoLongform} />

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { primaryButtonClass } from "@/components/ui/Button";
 import { getStateBySlug, getCitiesByStateSlug, getStates } from "@/lib/data";
 import { CityCard } from "@/components/CityCard";
 import { Callout } from "@/components/Callout";
@@ -57,6 +59,14 @@ export default async function StatePage({ params }: StatePageProps) {
   }));
   const seoLongform = buildStateSeoLongform(state, cities);
 
+  const relatedArticles: { title: string; href: string }[] = [];
+  if (state.slug === "texas" || state.slug === "california") {
+    relatedArticles.push({
+      title: "California to Texas Moving Cost in 2026: Budget, Hidden Fees, and City Checks",
+      href: "/insights/california-to-texas-moving-cost-2026/"
+    });
+  }
+
   return (
     <div className="space-y-6">
       <Breadcrumbs
@@ -103,6 +113,26 @@ export default async function StatePage({ params }: StatePageProps) {
         </Callout>
         <LeadForm city={state.slug} state={state.code} compact />
       </section>
+
+      {relatedArticles.length > 0 && (
+        <section aria-label="Related insights" className="space-y-3">
+          <h2 className="text-sm font-semibold text-brand-primary">Related articles & guides</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {relatedArticles.map((art) => (
+              <BubbleCard key={art.href} className="p-5 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm font-semibold text-brand-primary mb-2">{art.title}</h3>
+                </div>
+                <div className="mt-3">
+                  <Link href={art.href as any} className={primaryButtonClass}>
+                    Read article -&gt;
+                  </Link>
+                </div>
+              </BubbleCard>
+            ))}
+          </div>
+        </section>
+      )}
 
       <SeoLongform {...seoLongform} />
     </div>
