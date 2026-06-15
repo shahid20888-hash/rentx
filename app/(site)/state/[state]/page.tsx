@@ -13,6 +13,7 @@ import { InternalLinks } from "@/components/InternalLinks";
 import { BubbleCard } from "@/components/BubbleCard";
 import { SeoLongform } from "@/components/SeoLongform";
 import { buildStateSeoLongform } from "@/lib/seoLongformContent";
+import { statePageSchema } from "@/lib/schema";
 
 type StatePageProps = {
   params: Promise<{
@@ -58,6 +59,7 @@ export default async function StatePage({ params }: StatePageProps) {
     slug: guide.slug
   }));
   const seoLongform = buildStateSeoLongform(state, cities);
+  const stateSchema = statePageSchema(state, cities);
 
   const relatedArticles: { title: string; href: string }[] = [];
   if (state.slug === "texas" || state.slug === "california") {
@@ -135,6 +137,12 @@ export default async function StatePage({ params }: StatePageProps) {
       )}
 
       <SeoLongform {...seoLongform} />
+
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(stateSchema) }}
+      />
     </div>
   );
 }

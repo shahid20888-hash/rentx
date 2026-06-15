@@ -150,3 +150,23 @@ export function articleSchema(guide: ArticleInput) {
   };
 }
 
+export function statePageSchema(state: any, cities: any[]) {
+  const url = `${SITE_URL}/state/${state.slug}/`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "AdministrativeArea",
+    name: state.name,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "US"
+    },
+    url,
+    containsPlace: cities.map((city) => ({
+      "@type": "City",
+      name: city.cityName,
+      url: `${SITE_URL}/city/${city.slug}/`
+    }))
+  };
+}
+
