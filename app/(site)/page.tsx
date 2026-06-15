@@ -13,6 +13,7 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { primaryButtonClass } from "@/components/ui/Button";
 import { SeoLongform } from "@/components/SeoLongform";
 import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = buildMetadata({
   title: "US cost of living made simple",
@@ -126,17 +127,12 @@ export default function HomePage() {
         <p className="text-xs text-brand-muted">
           Ads help support independent research content. We keep ad placements limited for a better reading experience.
         </p>
-        <ins
-          className="adsbygoogle block min-h-[120px] w-full overflow-hidden rounded-2xl border border-brand-border bg-brand-surface p-3"
-          style={{ display: "block" }}
-          data-ad-client="ca-pub-3635656048122177"
-          data-ad-slot="1234567890"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
+        <AdSlot
+          adClient="ca-pub-3635656048122177"
+          adSlot="1234567890"
+          adFormat="auto"
+          fullWidthResponsive="true"
         />
-        <Script id="adsense-homepage-init" strategy="afterInteractive">
-          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-        </Script>
       </section>
 
       <section aria-label="Latest guides" className="space-y-4">
