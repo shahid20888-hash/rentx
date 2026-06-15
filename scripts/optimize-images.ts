@@ -61,6 +61,23 @@ async function main() {
     await optimizeFolder(cardsDir, 600);
   }
 
+  // 3. Process Site Logo (PNG, resized to 128px width, compressed)
+  console.log("\n--- Optimizing Site Logo ---");
+  const logoPath = path.join(__dirname, "..", "public", "logo-rentx.png");
+  if (fs.existsSync(logoPath)) {
+    const stat = fs.statSync(logoPath);
+    console.log(`⚡ Optimizing Logo: logo-rentx.png (${(stat.size / 1024).toFixed(1)} KB)`);
+    const tempPath = path.join(__dirname, "..", "public", "temp-logo-rentx.png");
+    await sharp(logoPath)
+      .resize({ width: 128 })
+      .png({ quality: 80, compressionLevel: 9 })
+      .toFile(tempPath);
+    fs.unlinkSync(logoPath);
+    fs.renameSync(tempPath, logoPath);
+    const newStat = fs.statSync(logoPath);
+    console.log(`   Optimized Logo to: ${(newStat.size / 1024).toFixed(1)} KB (Saved: ${(((stat.size - newStat.size) / stat.size) * 100).toFixed(1)}%)`);
+  }
+
   console.log("\n🎉 All images optimized successfully!");
 }
 
