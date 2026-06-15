@@ -44,7 +44,7 @@ export default function ComparePage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/compare-hero.png"
+            src="/images/compare-hero.webp"
             alt="RentX City Cost Comparison Models"
             fill
             priority

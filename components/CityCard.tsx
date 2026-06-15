@@ -13,14 +13,14 @@ type CityCardProps = {
 export function CityCard({ name, stateCode, slug, summary, costIndex }: CityCardProps) {
   // Deterministic cover image selection based on city slug
   const getCityImage = (citySlug: string) => {
-    if (citySlug === "san-francisco-ca" || citySlug === "seattle-wa") return "/images/cards/city-1.png";
-    if (citySlug === "new-york-ny" || citySlug === "chicago-il") return "/images/cards/city-2.png";
-    if (citySlug === "los-angeles-ca" || citySlug === "san-diego-ca" || citySlug === "miami-fl") return "/images/cards/city-3.png";
+    if (citySlug === "san-francisco-ca" || citySlug === "seattle-wa") return "/images/cards/city-1.webp";
+    if (citySlug === "new-york-ny" || citySlug === "chicago-il") return "/images/cards/city-2.webp";
+    if (citySlug === "los-angeles-ca" || citySlug === "san-diego-ca" || citySlug === "miami-fl") return "/images/cards/city-3.webp";
     
     // Fallback based on char code sum
     const sum = citySlug.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const index = (sum % 4) + 1;
-    return `/images/cards/city-${index}.png`;
+    return `/images/cards/city-${index}.webp`;
   };
 
   // Determine cost level badge styling based on US average index (100)

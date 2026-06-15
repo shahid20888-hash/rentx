@@ -37,7 +37,7 @@ export default function InsightsPage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/insights-hero.png"
+            src="/images/insights-hero.webp"
             alt="RentX Cost of Living Insights Library"
             fill
             priority

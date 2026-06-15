@@ -37,7 +37,7 @@ export default function GuidesPage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/guides-hero.png"
+            src="/images/guides-hero.webp"
             alt="RentX Cost of Living Guides Library"
             fill
             priority

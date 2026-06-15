@@ -37,7 +37,7 @@ export default function HomePage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/homepage-hero.png"
+            src="/images/homepage-hero.webp"
             alt="US Metro Skyline twilight"
             fill
             priority

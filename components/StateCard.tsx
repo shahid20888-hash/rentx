@@ -12,13 +12,13 @@ type StateCardProps = {
 export function StateCard({ name, code, slug, summary }: StateCardProps) {
   // Deterministic cover image selection based on state slug
   const getStateImage = (stateSlug: string) => {
-    if (stateSlug === "california" || stateSlug === "florida") return "/images/cards/state-1.png";
-    if (stateSlug === "texas" || stateSlug === "new-york") return "/images/cards/state-2.png";
+    if (stateSlug === "california" || stateSlug === "florida") return "/images/cards/state-1.webp";
+    if (stateSlug === "texas" || stateSlug === "new-york") return "/images/cards/state-2.webp";
     
     // Fallback based on char code sum
     const sum = stateSlug.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const index = (sum % 3) + 1;
-    return `/images/cards/state-${index}.png`;
+    return `/images/cards/state-${index}.webp`;
   };
 
   return (

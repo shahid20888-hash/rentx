@@ -31,7 +31,7 @@ export default function CitiesPage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/cities-hero.png"
+            src="/images/cities-hero.webp"
             alt="US Metros skylines twilight collage"
             fill
             priority

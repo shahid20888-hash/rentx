@@ -70,7 +70,7 @@ export default async function FindAProPage({ searchParams }: FindAProPageProps) 
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/find-a-pro-hero.png"
+            src="/images/find-a-pro-hero.webp"
             alt="Real estate professional showing housing options"
             fill
             priority
@@ -136,7 +136,7 @@ export default async function FindAProPage({ searchParams }: FindAProPageProps) 
           {/* Right Column illustration block */}
           <div className="hidden lg:block relative h-[300px] rounded-2xl overflow-hidden border border-white/[0.1] shadow-lg group">
             <Image
-              src="/images/find-a-pro-hero.png"
+              src="/images/find-a-pro-hero.webp"
               alt="Real estate professional"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

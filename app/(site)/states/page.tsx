@@ -31,7 +31,7 @@ export default function StatesPage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/states-hero.png"
+            src="/images/states-hero.webp"
             alt="Scenic US Highway stretch"
             fill
             priority

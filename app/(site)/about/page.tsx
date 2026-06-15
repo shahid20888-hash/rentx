@@ -23,7 +23,7 @@ export default function AboutPage() {
         {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/about-hero.png"
+            src="/images/about-hero.webp"
             alt="RentX Editorial Office Workspace"
             fill
             priority
@@ -108,7 +108,7 @@ export default function AboutPage() {
           {/* Custom Vetted Visual Box */}
           <div className="relative flex-1 overflow-hidden rounded-2xl border border-white/[0.1] shadow-lg min-h-[200px] group">
             <Image
-              src="/images/about-hero.png"
+              src="/images/about-hero.webp"
               alt="Editorial workspace desk"
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
