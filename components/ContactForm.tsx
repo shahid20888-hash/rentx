@@ -1,45 +1,82 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import { BubbleCard } from "@/components/BubbleCard";
 import { Button } from "@/components/ui/Button";
 
 export function ContactForm() {
-  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmitting(true);
     setSubmitError("");
+    setSubmitSuccess("");
 
     const formData = new FormData(event.currentTarget);
-    const body = new URLSearchParams();
+    const payload = {
+      name: (formData.get("name") as string || "").trim(),
+      email: (formData.get("email") as string || "").trim(),
+      subject: (formData.get("subject") as string || "").trim(),
+      message: (formData.get("message") as string || "").trim(),
+      website: (formData.get("website") as string || "").trim(), // Honeypot
+      pageUrl: typeof window !== "undefined" ? window.location.href : ""
+    };
 
-    formData.forEach((value, key) => {
-      if (typeof value === "string") {
-        body.append(key, value);
-      }
-    });
+    // Client-side validations
+    if (!payload.name) {
+      setSubmitError("Name is required.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (!payload.email) {
+      setSubmitError("Email is required.");
+      setIsSubmitting(false);
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(payload.email)) {
+      setSubmitError("Please enter a valid email address.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (!payload.subject) {
+      setSubmitError("Subject is required.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (!payload.message) {
+      setSubmitError("Message is required.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (payload.message.length > 5000) {
+      setSubmitError("Message must be 5000 characters or less.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      const response = await fetch("/__forms.html", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json"
         },
-        body: body.toString()
+        body: JSON.stringify(payload)
       });
 
+      const resData = await response.json().catch(() => ({}));
+
       if (!response.ok) {
-        throw new Error("Form submission failed");
+        throw new Error(resData.error || "Form submission failed");
       }
 
-      router.push("/thanks");
-    } catch {
-      setSubmitError("We could not send your message right now. Please try again.");
+      setSubmitSuccess(resData.message || "Thank you! Your message has been sent successfully.");
+      event.currentTarget.reset();
+    } catch (err: any) {
+      setSubmitError(err.message || "We could not send your message right now. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -47,7 +84,18 @@ export function ContactForm() {
 
   return (
     <BubbleCard as="form" name="contact" method="POST" onSubmit={handleSubmit} className="space-y-4 p-4 text-sm sm:p-5">
-      <input type="hidden" name="form-name" value="contact" />
+      {/* Honeypot field - hidden from users but bots will fill it */}
+      <div style={{ display: "none" }} aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1.5">
           <label className="block text-xs font-medium text-brand-primary" htmlFor="contact-name">
@@ -60,6 +108,7 @@ export function ContactForm() {
             autoComplete="name"
             className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
             required
+            maxLength={100}
           />
         </div>
         <div className="space-y-1.5">
@@ -76,6 +125,22 @@ export function ContactForm() {
           />
         </div>
       </div>
+
+      <div className="space-y-1.5">
+        <label className="block text-xs font-medium text-brand-primary" htmlFor="contact-subject">
+          Subject
+        </label>
+        <input
+          id="contact-subject"
+          name="subject"
+          type="text"
+          className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
+          required
+          maxLength={200}
+          placeholder="What is this regarding?"
+        />
+      </div>
+
       <div className="space-y-1.5">
         <label className="block text-xs font-medium text-brand-primary" htmlFor="contact-message">
           How can we help?
@@ -86,16 +151,27 @@ export function ContactForm() {
           rows={4}
           className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text placeholder:text-brand-text/60 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
           placeholder="Share a bit about your question, idea, or feedback."
+          required
+          maxLength={5000}
         />
       </div>
+
       <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Send message"}
       </Button>
+
       {submitError ? (
-        <p className="text-xs text-red-200" role="alert">
+        <div className="p-3.5 rounded-lg border border-red-500/20 bg-red-500/10 text-red-200 text-xs" role="alert">
           {submitError}
-        </p>
+        </div>
       ) : null}
+
+      {submitSuccess ? (
+        <div className="p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-200 text-xs" role="alert">
+          {submitSuccess}
+        </div>
+      ) : null}
+
       <p className="text-[11px] text-brand-text/75">
         Information is for general guidance. We don&apos;t provide legal or financial advice.
       </p>
