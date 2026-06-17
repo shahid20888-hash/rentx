@@ -67,7 +67,14 @@ export function ContactForm() {
         body: JSON.stringify(payload)
       });
 
-      const resData = await response.json().catch(() => ({}));
+      let resData: any = {};
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        resData = await response.json().catch(() => ({}));
+      } else {
+        const textError = await response.text().catch(() => "");
+        resData = { error: textError.slice(0, 150) || `HTTP Error ${response.status}: ${response.statusText}` };
+      }
 
       if (!response.ok) {
         throw new Error(resData.error || "Form submission failed");
@@ -76,6 +83,7 @@ export function ContactForm() {
       setSubmitSuccess(resData.message || "Thank you! Your message has been sent successfully.");
       event.currentTarget.reset();
     } catch (err: any) {
+      console.error("Contact Form Submission Error:", err);
       setSubmitError(err.message || "We could not send your message right now. Please try again.");
     } finally {
       setIsSubmitting(false);

@@ -1,113 +1,64 @@
-interface PagesFunctionContext {
-  request: Request;
-  env: {
-    RESEND_API_KEY?: string;
-    CONTACT_TO_EMAIL?: string;
-  };
-}
+import { NextResponse } from "next/server";
 
-export async function onRequestPost(context: PagesFunctionContext): Promise<Response> {
-  const { request, env } = context;
-
-  // Set up standard headers
-  const responseHeaders = new Headers({
-    "Content-Type": "application/json",
-  });
-
+export async function POST(request: Request) {
   try {
     // 1. Parse JSON body
     let body: any;
     try {
       body = await request.json();
     } catch {
-      return new Response(
-        JSON.stringify({ error: "Invalid JSON request body." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Invalid JSON request body." }, { status: 400 });
     }
 
     const { name, email, subject, message, website, pageUrl } = body;
 
     // 2. Honeypot check
-    // If the hidden 'website' field is populated, we suspect a bot submission.
-    // We return a 200 OK success message to prevent the bot from trying other tactics,
-    // but we silently drop the email sending.
     if (website && typeof website === "string" && website.trim() !== "") {
-      console.warn("Spam submission blocked via honeypot field.");
-      return new Response(
-        JSON.stringify({
-          success: true,
-          message: "Thank you! Your message has been sent successfully.",
-        }),
-        { status: 200, headers: responseHeaders }
-      );
+      console.warn("Spam submission blocked via honeypot field (Next.js Route).");
+      return NextResponse.json({
+        success: true,
+        message: "Thank you! Your message has been sent successfully.",
+      }, { status: 200 });
     }
 
     // 3. Validation
     if (!name || typeof name !== "string" || name.trim() === "") {
-      return new Response(
-        JSON.stringify({ error: "Name is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Name is required." }, { status: 400 });
     }
     if (name.length > 100) {
-      return new Response(
-        JSON.stringify({ error: "Name must be 100 characters or less." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Name must be 100 characters or less." }, { status: 400 });
     }
 
     if (!email || typeof email !== "string" || email.trim() === "") {
-      return new Response(
-        JSON.stringify({ error: "Email is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Email is required." }, { status: 400 });
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      return new Response(
-        JSON.stringify({ error: "Please provide a valid email address." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Please provide a valid email address." }, { status: 400 });
     }
 
     if (!subject || typeof subject !== "string" || subject.trim() === "") {
-      return new Response(
-        JSON.stringify({ error: "Subject is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Subject is required." }, { status: 400 });
     }
     if (subject.length > 200) {
-      return new Response(
-        JSON.stringify({ error: "Subject must be 200 characters or less." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Subject must be 200 characters or less." }, { status: 400 });
     }
 
     if (!message || typeof message !== "string" || message.trim() === "") {
-      return new Response(
-        JSON.stringify({ error: "Message is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Message is required." }, { status: 400 });
     }
     if (message.length > 5000) {
-      return new Response(
-        JSON.stringify({ error: "Message must be 5000 characters or less." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ error: "Message must be 5000 characters or less." }, { status: 400 });
     }
 
     // 4. Check API configuration
-    const resendApiKey = env.RESEND_API_KEY?.trim();
+    const resendApiKey = process.env.RESEND_API_KEY?.trim();
     if (!resendApiKey) {
-      console.error("Configuration Error: RESEND_API_KEY is not defined.");
-      return new Response(
-        JSON.stringify({ error: "Email sending configuration is missing on the server." }),
-        { status: 500, headers: responseHeaders }
-      );
+      console.error("Configuration Error: RESEND_API_KEY is not defined in process.env.");
+      return NextResponse.json({ error: "Email sending configuration is missing on the server." }, { status: 500 });
     }
 
-    const contactToEmail = env.CONTACT_TO_EMAIL?.trim() || "support@rentx.us";
+    const contactToEmail = process.env.CONTACT_TO_EMAIL?.trim() || "support@rentx.us";
 
     // 5. Construct Email Contents
     const submittedAt = new Date().toISOString();
@@ -201,25 +152,16 @@ ${message.trim()}
 
     if (!resendResponse.ok) {
       const resendErrorText = await resendResponse.text();
-      console.error("Resend API Error:", resendErrorText);
-      return new Response(
-        JSON.stringify({ error: `Failed to send email: ${resendErrorText}` }),
-        { status: 500, headers: responseHeaders }
-      );
+      console.error("Resend API Error (Next.js Route):", resendErrorText);
+      return NextResponse.json({ error: `Failed to send email: ${resendErrorText}` }, { status: 500 });
     }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: "Thank you! Your message has been sent successfully.",
-      }),
-      { status: 200, headers: responseHeaders }
-    );
+    return NextResponse.json({
+      success: true,
+      message: "Thank you! Your message has been sent successfully.",
+    }, { status: 200 });
   } catch (error: any) {
-    console.error("Contact Form Function Error:", error);
-    return new Response(
-      JSON.stringify({ error: "An unexpected error occurred while processing your request." }),
-      { status: 500, headers: responseHeaders }
-    );
+    console.error("Contact Form Next.js Route Error:", error);
+    return NextResponse.json({ error: "An unexpected error occurred while processing your request." }, { status: 500 });
   }
 }
