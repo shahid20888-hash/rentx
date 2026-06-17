@@ -3,6 +3,8 @@ import { getCities, getStates, getProsByCitySlug } from "@/lib/data";
 import { GUIDES } from "@/lib/guides";
 import { INSIGHTS } from "@/lib/insights";
 
+export const dynamic = "force-static";
+
 const BASE_URL = "https://rentx.us";
 const NOW = new Date();
 

@@ -2,6 +2,7 @@ const createMDX = require("@next/mdx");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
   trailingSlash: true,
   typedRoutes: true,
   images: {
