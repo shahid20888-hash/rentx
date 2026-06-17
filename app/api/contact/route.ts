@@ -1,101 +1,60 @@
-export const onRequestPost = async (context: {
-  request: Request;
-  env: {
-    RESEND_API_KEY?: string;
-    CONTACT_TO_EMAIL?: string;
-  };
-}): Promise<Response> => {
-  const { request, env } = context;
+import { NextResponse } from "next/server";
 
+export async function POST(request: Request) {
   const responseHeaders = new Headers({
     "Content-Type": "application/json",
   });
 
-  // 1. Accept POST only
-  if (request.method !== "POST") {
-    return new Response(
-      JSON.stringify({ success: false, error: "Method not allowed. Only POST is supported." }),
-      { status: 405, headers: responseHeaders }
-    );
-  }
-
   try {
-    // 2. Read JSON body: name, email, message
+    // 1. Read JSON body: name, email, message
     let body: any;
     try {
       body = await request.json();
     } catch (err) {
-      console.error("[Pages Function] Error parsing JSON body:", err);
-      return new Response(
-        JSON.stringify({ success: false, error: "Invalid JSON body." }),
-        { status: 400, headers: responseHeaders }
-      );
+      console.error("[Route Handler] Error parsing JSON body:", err);
+      return NextResponse.json({ success: false, error: "Invalid JSON body." }, { status: 400 });
     }
 
     const { name, email, message } = body;
 
-    // 3. Validation
+    // 2. Validation
     if (!name || typeof name !== "string" || name.trim() === "") {
-      return new Response(
-        JSON.stringify({ success: false, error: "Name is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ success: false, error: "Name is required." }, { status: 400 });
     }
     if (name.length > 100) {
-      return new Response(
-        JSON.stringify({ success: false, error: "Name must be 100 characters or less." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ success: false, error: "Name must be 100 characters or less." }, { status: 400 });
     }
 
     if (!email || typeof email !== "string" || email.trim() === "") {
-      return new Response(
-        JSON.stringify({ success: false, error: "Email is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ success: false, error: "Email is required." }, { status: 400 });
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      return new Response(
-        JSON.stringify({ success: false, error: "Please provide a valid email address." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ success: false, error: "Please provide a valid email address." }, { status: 400 });
     }
 
     if (!message || typeof message !== "string" || message.trim() === "") {
-      return new Response(
-        JSON.stringify({ success: false, error: "Message is required." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ success: false, error: "Message is required." }, { status: 400 });
     }
     if (message.length > 3000) {
-      return new Response(
-        JSON.stringify({ success: false, error: "Message must be 3000 characters or less." }),
-        { status: 400, headers: responseHeaders }
-      );
+      return NextResponse.json({ success: false, error: "Message must be 3000 characters or less." }, { status: 400 });
     }
 
-    // 4. Use env variables
-    const resendApiKey = env.RESEND_API_KEY?.trim();
-    const contactToEmail = env.CONTACT_TO_EMAIL?.trim();
+    // 3. Use env variables
+    const resendApiKey = process.env.RESEND_API_KEY?.trim() || (globalThis as any).RESEND_API_KEY?.trim();
+    const contactToEmail = process.env.CONTACT_TO_EMAIL?.trim() || (globalThis as any).CONTACT_TO_EMAIL?.trim();
 
     if (!resendApiKey) {
-      console.error("[Pages Function] Missing RESEND_API_KEY environment variable.");
-      return new Response(
-        JSON.stringify({ success: false, error: "Email sending configuration is missing on the server." }),
-        { status: 500, headers: responseHeaders }
-      );
+      console.error("[Route Handler] Missing RESEND_API_KEY environment variable.");
+      return NextResponse.json({ success: false, error: "Email sending configuration is missing on the server." }, { status: 500 });
     }
 
     if (!contactToEmail) {
-      console.error("[Pages Function] Missing CONTACT_TO_EMAIL environment variable.");
-      return new Response(
-        JSON.stringify({ success: false, error: "Destination email configuration is missing on the server." }),
-        { status: 500, headers: responseHeaders }
-      );
+      console.error("[Route Handler] Missing CONTACT_TO_EMAIL environment variable.");
+      return NextResponse.json({ success: false, error: "Destination email configuration is missing on the server." }, { status: 500 });
     }
 
-    // 5. Construct email body (include Name, Email, Message, Date, Page URL)
+    // 4. Construct email body (include Name, Email, Message, Date, Page URL)
     const date = new Date().toISOString();
     const pageUrl = request.headers.get("referer") || "Unknown Page";
 
@@ -161,8 +120,8 @@ ${message.trim()}
 </html>
     `.trim();
 
-    // 6. Send via Resend REST API
-    console.log("[Pages Function] Calling Resend API to send email...");
+    // 5. Send via Resend REST API
+    console.log("[Route Handler] Calling Resend API to send email...");
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -180,9 +139,9 @@ ${message.trim()}
       }),
     });
 
-    console.log(`[Pages Function] Resend API response status: ${resendResponse.status}`);
+    console.log(`[Route Handler] Resend API response status: ${resendResponse.status}`);
 
-    // 7. If Resend API fails, return exact safe error message
+    // 6. If Resend API fails, return exact safe error message
     if (!resendResponse.ok) {
       let errorMessage = `Resend API Error: ${resendResponse.statusText}`;
       try {
@@ -198,23 +157,14 @@ ${message.trim()}
           errorMessage = resendText;
         }
       }
-      console.error("[Pages Function] Resend API Error:", errorMessage);
-      return new Response(
-        JSON.stringify({ success: false, error: errorMessage }),
-        { status: resendResponse.status, headers: responseHeaders }
-      );
+      console.error("[Route Handler] Resend API Error:", errorMessage);
+      return NextResponse.json({ success: false, error: errorMessage }, { status: resendResponse.status });
     }
 
-    console.log("[Pages Function] Email sent successfully.");
-    return new Response(
-      JSON.stringify({ success: true }),
-      { status: 200, headers: responseHeaders }
-    );
+    console.log("[Route Handler] Email sent successfully.");
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: any) {
-    console.error("[Pages Function] Unexpected error in POST handler:", error);
-    return new Response(
-      JSON.stringify({ success: false, error: error.message || "An unexpected server error occurred." }),
-      { status: 500, headers: responseHeaders }
-    );
+    console.error("[Route Handler] Unexpected error in POST handler:", error);
+    return NextResponse.json({ success: false, error: error.message || "An unexpected server error occurred." }, { status: 500 });
   }
-};
+}

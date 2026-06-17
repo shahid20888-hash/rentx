@@ -59,7 +59,11 @@ export function ContactForm() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          message: payload.message
+        })
       });
 
       let resData: any = {};
