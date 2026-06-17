@@ -42,11 +42,6 @@ export function ContactForm() {
       setIsSubmitting(false);
       return;
     }
-    if (!payload.subject) {
-      setSubmitError("Subject is required.");
-      setIsSubmitting(false);
-      return;
-    }
     if (!payload.message) {
       setSubmitError("Message is required.");
       setIsSubmitting(false);
@@ -132,21 +127,6 @@ export function ContactForm() {
             required
           />
         </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <label className="block text-xs font-medium text-brand-primary" htmlFor="contact-subject">
-          Subject
-        </label>
-        <input
-          id="contact-subject"
-          name="subject"
-          type="text"
-          className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
-          required
-          maxLength={200}
-          placeholder="What is this regarding?"
-        />
       </div>
 
       <div className="space-y-1.5">

@@ -71,18 +71,7 @@ export async function onRequestPost(context: PagesFunctionContext): Promise<Resp
       );
     }
 
-    if (!subject || typeof subject !== "string" || subject.trim() === "") {
-      return new Response(
-        JSON.stringify({ error: "Subject is required." }),
-        { status: 400, headers: responseHeaders }
-      );
-    }
-    if (subject.length > 200) {
-      return new Response(
-        JSON.stringify({ error: "Subject must be 200 characters or less." }),
-        { status: 400, headers: responseHeaders }
-      );
-    }
+    const cleanSubject = (subject && typeof subject === "string" && subject.trim() !== "") ? subject.trim().slice(0, 200) : "";
 
     if (!message || typeof message !== "string" || message.trim() === "") {
       return new Response(
@@ -113,7 +102,7 @@ export async function onRequestPost(context: PagesFunctionContext): Promise<Resp
     const submittedAt = new Date().toISOString();
     const sourceUrl = pageUrl && typeof pageUrl === "string" ? pageUrl : request.headers.get("referer") || "Unknown Page";
 
-    const emailSubject = `New RentX Contact Form Submission: ${subject.trim()}`;
+    const emailSubject = cleanSubject ? `New RentX Contact Form Submission: ${cleanSubject}` : "New RentX Contact Form Submission";
 
     const textContent = `
 New RentX Contact Form Submission
@@ -124,7 +113,7 @@ Page URL: ${sourceUrl}
 ----------------------------------------
 Name: ${name.trim()}
 Email: ${email.trim()}
-Subject: ${subject.trim()}
+Subject: ${cleanSubject || "(No subject provided)"}
 Message:
 ${message.trim()}
 ----------------------------------------
@@ -167,7 +156,7 @@ ${message.trim()}
       </tr>
       <tr>
         <td class="label">Subject:</td>
-        <td>${subject.trim()}</td>
+        <td>${cleanSubject || "<em>(No subject provided)</em>"}</td>
       </tr>
     </table>
     
