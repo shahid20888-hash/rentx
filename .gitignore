@@ -1,12 +1,20 @@
 node_modules/
 .next/
 .netlify/
+out/
 
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+*.env*
+
+# Secrets and API keys
+*.pem
+*.key
+*creds*
+*secret*
 
 *.log
 npm-debug.log*
