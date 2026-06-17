@@ -1,64 +1,75 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
+  console.log("[Next.js API Route] Request received (POST /api/contact)");
+
   try {
     // 1. Parse JSON body
     let body: any;
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json({ error: "Invalid JSON request body." }, { status: 400 });
+      console.log("[Next.js API Route] Error: Failed to parse JSON body");
+      return NextResponse.json({ success: false, error: "Invalid JSON request body." }, { status: 400 });
     }
 
     const { name, email, subject, message, website, pageUrl } = body;
 
+    console.log("[Next.js API Route] Form values received:", {
+      name: name ? `${name.substring(0, 20)}...` : null,
+      email,
+      hasSubject: !!subject,
+      messageLength: message?.length,
+      hasHoneypot: !!website
+    });
+
     // 2. Honeypot check
     if (website && typeof website === "string" && website.trim() !== "") {
-      console.warn("Spam submission blocked via honeypot field (Next.js Route).");
-      return NextResponse.json({
-        success: true,
-        message: "Thank you! Your message has been sent successfully.",
-      }, { status: 200 });
+      console.log("[Next.js API Route] Honeypot field filled. Dropping message silently.");
+      return NextResponse.json({ success: true }, { status: 200 });
     }
 
     // 3. Validation
     if (!name || typeof name !== "string" || name.trim() === "") {
-      return NextResponse.json({ error: "Name is required." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Name is required." }, { status: 400 });
     }
     if (name.length > 100) {
-      return NextResponse.json({ error: "Name must be 100 characters or less." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Name must be 100 characters or less." }, { status: 400 });
     }
 
     if (!email || typeof email !== "string" || email.trim() === "") {
-      return NextResponse.json({ error: "Email is required." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Email is required." }, { status: 400 });
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      return NextResponse.json({ error: "Please provide a valid email address." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Please provide a valid email address." }, { status: 400 });
     }
-
-    const cleanSubject = (subject && typeof subject === "string" && subject.trim() !== "") ? subject.trim().slice(0, 200) : "";
 
     if (!message || typeof message !== "string" || message.trim() === "") {
-      return NextResponse.json({ error: "Message is required." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Message is required." }, { status: 400 });
     }
-    if (message.length > 5000) {
-      return NextResponse.json({ error: "Message must be 5000 characters or less." }, { status: 400 });
+    if (message.length > 3000) {
+      return NextResponse.json({ success: false, error: "Message must be 3000 characters or less." }, { status: 400 });
     }
 
-    // 4. Check API configuration
-    const resendApiKey = process.env.RESEND_API_KEY?.trim();
+    // 4. Check API configuration (Support both process.env and global scope for Edge Workers compatibility)
+    const resendApiKey = process.env.RESEND_API_KEY?.trim() || (globalThis as any).RESEND_API_KEY?.trim();
+    const contactToEmail = process.env.CONTACT_TO_EMAIL?.trim() || (globalThis as any).CONTACT_TO_EMAIL?.trim() || "support@rentx.us";
+
+    console.log("[Next.js API Route] Environment variables check:", {
+      RESEND_API_KEY_Exists: !!resendApiKey,
+      CONTACT_TO_EMAIL_Exists: !!process.env.CONTACT_TO_EMAIL || !!(globalThis as any).CONTACT_TO_EMAIL
+    });
+
     if (!resendApiKey) {
-      console.error("Configuration Error: RESEND_API_KEY is not defined in process.env.");
-      return NextResponse.json({ error: "Email sending configuration is missing on the server." }, { status: 500 });
+      console.error("[Next.js API Route] Error: RESEND_API_KEY environment variable is missing.");
+      return NextResponse.json({ success: false, error: "Email sending configuration is missing on the server." }, { status: 500 });
     }
-
-    const contactToEmail = process.env.CONTACT_TO_EMAIL?.trim() || "support@rentx.us";
 
     // 5. Construct Email Contents
     const submittedAt = new Date().toISOString();
     const sourceUrl = pageUrl && typeof pageUrl === "string" ? pageUrl : request.headers.get("referer") || "Unknown Page";
-
+    const cleanSubject = (subject && typeof subject === "string" && subject.trim() !== "") ? subject.trim().slice(0, 200) : "";
     const emailSubject = cleanSubject ? `New RentX Contact Form Submission: ${cleanSubject}` : "New RentX Contact Form Submission";
 
     const textContent = `
@@ -129,6 +140,7 @@ ${message.trim()}
     `;
 
     // 6. Send via Resend API
+    console.log("[Next.js API Route] Fetching Resend API to send email...");
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -139,24 +151,25 @@ ${message.trim()}
         from: "RentX Contact <support@rentx.us>",
         to: [contactToEmail],
         reply_to: email.trim(),
+        replyTo: email.trim(),
         subject: emailSubject,
         text: textContent,
         html: htmlContent,
       }),
     });
 
+    console.log(`[Next.js API Route] Resend API Response Status: ${resendResponse.status}`);
+
     if (!resendResponse.ok) {
       const resendErrorText = await resendResponse.text();
-      console.error("Resend API Error (Next.js Route):", resendErrorText);
-      return NextResponse.json({ error: `Failed to send email: ${resendErrorText}` }, { status: 500 });
+      console.error("[Next.js API Route] Resend API Error Response:", resendErrorText);
+      return NextResponse.json({ success: false, error: `Failed to send email: ${resendErrorText}` }, { status: 500 });
     }
 
-    return NextResponse.json({
-      success: true,
-      message: "Thank you! Your message has been sent successfully.",
-    }, { status: 200 });
+    console.log("[Next.js API Route] Email sent successfully via Resend.");
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: any) {
-    console.error("Contact Form Next.js Route Error:", error);
-    return NextResponse.json({ error: "An unexpected error occurred while processing your request." }, { status: 500 });
+    console.error("[Next.js API Route] Unexpected error in POST handler:", error);
+    return NextResponse.json({ success: false, error: error.message || "An unexpected server error occurred." }, { status: 500 });
   }
 }

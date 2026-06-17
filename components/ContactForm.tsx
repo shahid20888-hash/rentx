@@ -47,8 +47,8 @@ export function ContactForm() {
       setIsSubmitting(false);
       return;
     }
-    if (payload.message.length > 5000) {
-      setSubmitError("Message must be 5000 characters or less.");
+    if (payload.message.length > 3000) {
+      setSubmitError("Message must be 3000 characters or less.");
       setIsSubmitting(false);
       return;
     }
@@ -68,14 +68,14 @@ export function ContactForm() {
         resData = await response.json().catch(() => ({}));
       } else {
         const textError = await response.text().catch(() => "");
-        resData = { error: textError.slice(0, 150) || `HTTP Error ${response.status}: ${response.statusText}` };
+        resData = { success: false, error: textError.slice(0, 150) || `HTTP Error ${response.status}: ${response.statusText}` };
       }
 
-      if (!response.ok) {
+      if (!response.ok || resData.success === false) {
         throw new Error(resData.error || "Form submission failed");
       }
 
-      setSubmitSuccess(resData.message || "Thank you! Your message has been sent successfully.");
+      setSubmitSuccess("Thank you! Your message has been sent successfully.");
       event.currentTarget.reset();
     } catch (err: any) {
       console.error("Contact Form Submission Error:", err);
@@ -140,7 +140,7 @@ export function ContactForm() {
           className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text placeholder:text-brand-text/60 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
           placeholder="Share a bit about your question, idea, or feedback."
           required
-          maxLength={5000}
+          maxLength={3000}
         />
       </div>
 
