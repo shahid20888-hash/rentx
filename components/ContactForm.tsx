@@ -5,6 +5,11 @@ import { BubbleCard } from "@/components/BubbleCard";
 import { Button } from "@/components/ui/Button";
 
 export function ContactForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState(""); // Honeypot
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
@@ -15,40 +20,46 @@ export function ContactForm() {
     setSubmitError("");
     setSubmitSuccess("");
 
-    const formData = new FormData(event.currentTarget);
-    const payload = {
-      name: (formData.get("name") as string || "").trim(),
-      email: (formData.get("email") as string || "").trim(),
-      subject: (formData.get("subject") as string || "").trim(),
-      message: (formData.get("message") as string || "").trim(),
-      website: (formData.get("website") as string || "").trim(), // Honeypot
-      pageUrl: typeof window !== "undefined" ? window.location.href : ""
-    };
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedMessage = message.trim();
+    const trimmedWebsite = website.trim();
 
     // Client-side validations
-    if (!payload.name) {
+    if (!trimmedName) {
       setSubmitError("Name is required.");
       setIsSubmitting(false);
       return;
     }
-    if (!payload.email) {
+    if (!trimmedEmail) {
       setSubmitError("Email is required.");
       setIsSubmitting(false);
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(payload.email)) {
+    if (!emailRegex.test(trimmedEmail)) {
       setSubmitError("Please enter a valid email address.");
       setIsSubmitting(false);
       return;
     }
-    if (!payload.message) {
+    if (!trimmedMessage) {
       setSubmitError("Message is required.");
       setIsSubmitting(false);
       return;
     }
-    if (payload.message.length > 3000) {
+    if (trimmedMessage.length > 3000) {
       setSubmitError("Message must be 3000 characters or less.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Honeypot check (silently drop spam)
+    if (trimmedWebsite !== "") {
+      setSubmitSuccess("Thank you! Your message has been sent successfully.");
+      setName("");
+      setEmail("");
+      setMessage("");
+      setWebsite("");
       setIsSubmitting(false);
       return;
     }
@@ -60,9 +71,9 @@ export function ContactForm() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: payload.name,
-          email: payload.email,
-          message: payload.message
+          name: trimmedName,
+          email: trimmedEmail,
+          message: trimmedMessage
         })
       });
 
@@ -79,8 +90,13 @@ export function ContactForm() {
         throw new Error(resData.error || "Form submission failed");
       }
 
+      // Successful submission
       setSubmitSuccess("Thank you! Your message has been sent successfully.");
-      event.currentTarget.reset();
+      setSubmitError(""); // Explicitly clear any previous errors
+      setName("");
+      setEmail("");
+      setMessage("");
+      setWebsite("");
     } catch (err: any) {
       console.error("Contact Form Submission Error:", err);
       setSubmitError(err.message || "We could not send your message right now. Please try again.");
@@ -98,6 +114,8 @@ export function ContactForm() {
           id="contact-website"
           name="website"
           type="text"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
           tabIndex={-1}
           autoComplete="off"
         />
@@ -112,6 +130,8 @@ export function ContactForm() {
             id="contact-name"
             name="name"
             type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             autoComplete="name"
             className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
             required
@@ -126,6 +146,8 @@ export function ContactForm() {
             id="contact-email"
             name="email"
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
             required
@@ -141,6 +163,8 @@ export function ContactForm() {
           id="contact-message"
           name="message"
           rows={4}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           className="w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-brand-text placeholder:text-brand-text/60 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
           placeholder="Share a bit about your question, idea, or feedback."
           required
