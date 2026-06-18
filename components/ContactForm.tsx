@@ -105,6 +105,16 @@ export function ContactForm() {
     }
   }
 
+  if (submitSuccess) {
+    return (
+      <BubbleCard className="p-4 text-sm sm:p-5">
+        <div className="p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-200 text-xs" role="alert">
+          {submitSuccess}
+        </div>
+      </BubbleCard>
+    );
+  }
+
   return (
     <BubbleCard as="form" name="contact" method="POST" onSubmit={handleSubmit} className="space-y-4 p-4 text-sm sm:p-5">
       {/* Honeypot field - hidden from users but bots will fill it */}
