@@ -11,6 +11,9 @@ export const onRequestPost = async (context: {
     "Content-Type": "application/json",
   });
 
+  // Log 1: Endpoint hit and method
+  console.log(`[Pages Function] Endpoint hit: /api/contact, Method: ${request.method}`);
+
   // 1. Accept POST only
   if (request.method !== "POST") {
     return new Response(
@@ -75,14 +78,17 @@ export const onRequestPost = async (context: {
       );
     }
 
-    // 4. Use env variables
+    // 4. Use env variables (Read safely)
     const resendApiKey = env.RESEND_API_KEY?.trim();
     const contactToEmail = env.CONTACT_TO_EMAIL?.trim();
+
+    // Log 2: Env variables check (True/False only)
+    console.log(`[Pages Function] Env check -> RESEND_API_KEY exists: ${!!resendApiKey}, CONTACT_TO_EMAIL exists: ${!!contactToEmail}`);
 
     if (!resendApiKey) {
       console.error("[Pages Function] Missing RESEND_API_KEY environment variable.");
       return new Response(
-        JSON.stringify({ success: false, error: "Email sending configuration is missing on the server." }),
+        JSON.stringify({ success: false, error: "Email sending configuration (API Key) is missing on the server." }),
         { status: 500, headers: responseHeaders }
       );
     }
@@ -95,7 +101,7 @@ export const onRequestPost = async (context: {
       );
     }
 
-    // 5. Construct email body (include Name, Email, Message, Date, Page URL)
+    // 5. Construct email contents (Name, Email, Message, Page URL, Date)
     const date = new Date().toISOString();
     const pageUrl = request.headers.get("referer") || "Unknown Page";
 
@@ -180,7 +186,8 @@ ${message.trim()}
       }),
     });
 
-    console.log(`[Pages Function] Resend API response status: ${resendResponse.status}`);
+    // Log 3: Resend status code
+    console.log(`[Pages Function] Resend status code: ${resendResponse.status}`);
 
     // 7. If Resend API fails, return exact safe error message
     if (!resendResponse.ok) {
@@ -198,7 +205,10 @@ ${message.trim()}
           errorMessage = resendText;
         }
       }
-      console.error("[Pages Function] Resend API Error:", errorMessage);
+      
+      // Log 4: Resend error response
+      console.log(`[Pages Function] Resend error response: ${errorMessage}`);
+      
       return new Response(
         JSON.stringify({ success: false, error: errorMessage }),
         { status: resendResponse.status, headers: responseHeaders }

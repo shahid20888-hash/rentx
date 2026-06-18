@@ -5,6 +5,9 @@ export async function POST(request: Request) {
     "Content-Type": "application/json",
   });
 
+  // Log 1: Endpoint hit and method
+  console.log(`[Route Handler] Endpoint hit: /api/contact, Method: ${request.method}`);
+
   try {
     // 1. Read JSON body: name, email, message
     let body: any;
@@ -40,13 +43,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Message must be 3000 characters or less." }, { status: 400 });
     }
 
-    // 3. Use env variables
+    // 3. Use env variables (Read safely)
     const resendApiKey = process.env.RESEND_API_KEY?.trim() || (globalThis as any).RESEND_API_KEY?.trim();
     const contactToEmail = process.env.CONTACT_TO_EMAIL?.trim() || (globalThis as any).CONTACT_TO_EMAIL?.trim();
 
+    // Log 2: Env variables check (True/False only)
+    console.log(`[Route Handler] Env check -> RESEND_API_KEY exists: ${!!resendApiKey}, CONTACT_TO_EMAIL exists: ${!!contactToEmail}`);
+
     if (!resendApiKey) {
       console.error("[Route Handler] Missing RESEND_API_KEY environment variable.");
-      return NextResponse.json({ success: false, error: "Email sending configuration is missing on the server." }, { status: 500 });
+      return NextResponse.json({ success: false, error: "Email sending configuration (API Key) is missing on the server." }, { status: 500 });
     }
 
     if (!contactToEmail) {
@@ -54,7 +60,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Destination email configuration is missing on the server." }, { status: 500 });
     }
 
-    // 4. Construct email body (include Name, Email, Message, Date, Page URL)
+    // 4. Construct email contents (Name, Email, Message, Page URL, Date)
     const date = new Date().toISOString();
     const pageUrl = request.headers.get("referer") || "Unknown Page";
 
@@ -139,7 +145,8 @@ ${message.trim()}
       }),
     });
 
-    console.log(`[Route Handler] Resend API response status: ${resendResponse.status}`);
+    // Log 3: Resend status code
+    console.log(`[Route Handler] Resend status code: ${resendResponse.status}`);
 
     // 6. If Resend API fails, return exact safe error message
     if (!resendResponse.ok) {
@@ -157,7 +164,10 @@ ${message.trim()}
           errorMessage = resendText;
         }
       }
-      console.error("[Route Handler] Resend API Error:", errorMessage);
+      
+      // Log 4: Resend error response
+      console.log(`[Route Handler] Resend error response: ${errorMessage}`);
+      
       return NextResponse.json({ success: false, error: errorMessage }, { status: resendResponse.status });
     }
 
