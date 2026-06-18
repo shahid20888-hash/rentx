@@ -10,15 +10,18 @@ export function ContactForm() {
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState(""); // Honeypot
   
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-  const [submitSuccess, setSubmitSuccess] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmitting(true);
-    setSubmitError("");
-    setSubmitSuccess("");
+    
+    // 4. On submit start: setError(null), setSuccess(false)
+    setError(null);
+    setSuccess(false);
 
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
@@ -27,39 +30,46 @@ export function ContactForm() {
 
     // Client-side validations
     if (!trimmedName) {
-      setSubmitError("Name is required.");
+      setError("Name is required.");
+      setSuccess(false);
       setIsSubmitting(false);
       return;
     }
     if (!trimmedEmail) {
-      setSubmitError("Email is required.");
+      setError("Email is required.");
+      setSuccess(false);
       setIsSubmitting(false);
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(trimmedEmail)) {
-      setSubmitError("Please enter a valid email address.");
+      setError("Please enter a valid email address.");
+      setSuccess(false);
       setIsSubmitting(false);
       return;
     }
     if (!trimmedMessage) {
-      setSubmitError("Message is required.");
+      setError("Message is required.");
+      setSuccess(false);
       setIsSubmitting(false);
       return;
     }
     if (trimmedMessage.length > 3000) {
-      setSubmitError("Message must be 3000 characters or less.");
+      setError("Message must be 3000 characters or less.");
+      setSuccess(false);
       setIsSubmitting(false);
       return;
     }
 
     // Honeypot check (silently drop spam)
     if (trimmedWebsite !== "") {
-      setSubmitSuccess("Thank you! Your message has been sent successfully.");
+      // 5. On successful response (honeypot simulated success):
       setName("");
       setEmail("");
       setMessage("");
       setWebsite("");
+      setError(null);
+      setSuccess(true);
       setIsSubmitting(false);
       return;
     }
@@ -90,26 +100,29 @@ export function ContactForm() {
         throw new Error(resData.error || "Form submission failed");
       }
 
-      // Successful submission
-      setSubmitSuccess("Thank you! Your message has been sent successfully.");
-      setSubmitError(""); // Explicitly clear any previous errors
+      // 5. On successful API response:
       setName("");
       setEmail("");
       setMessage("");
       setWebsite("");
+      setError(null);
+      setSuccess(true);
     } catch (err: any) {
       console.error("Contact Form Submission Error:", err);
-      setSubmitError(err.message || "We could not send your message right now. Please try again.");
+      // 6. On failed API response:
+      setSuccess(false);
+      setError(err.message || "We could not send your message right now. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  if (submitSuccess) {
+  // 8. If success is true, show only the success message
+  if (success) {
     return (
       <BubbleCard className="p-4 text-sm sm:p-5">
         <div className="p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-200 text-xs" role="alert">
-          {submitSuccess}
+          Thank you! Your message has been sent successfully.
         </div>
       </BubbleCard>
     );
@@ -186,15 +199,10 @@ export function ContactForm() {
         {isSubmitting ? "Sending..." : "Send message"}
       </Button>
 
-      {submitError ? (
+      {/* 9. If error is null, do not render the red error box */}
+      {error !== null ? (
         <div className="p-3.5 rounded-lg border border-red-500/20 bg-red-500/10 text-red-200 text-xs" role="alert">
-          {submitError}
-        </div>
-      ) : null}
-
-      {submitSuccess ? (
-        <div className="p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-200 text-xs" role="alert">
-          {submitSuccess}
+          {error}
         </div>
       ) : null}
 
