@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import FindAProClient from "@/components/FindAProClient";
 import { buildMetadata } from "@/lib/seo";
 import { webPageSchema } from "@/lib/schema";
@@ -13,13 +12,7 @@ export const metadata: Metadata = buildMetadata({
 export default function FindAProPage() {
   return (
     <>
-      <Suspense fallback={
-        <div className="flex items-center justify-center p-20 text-brand-muted text-sm font-semibold">
-          Loading Local Professionals...
-        </div>
-      }>
-        <FindAProClient />
-      </Suspense>
+      <FindAProClient />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

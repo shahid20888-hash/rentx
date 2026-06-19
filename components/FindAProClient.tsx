@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { LeadForm } from "@/components/LeadForm";
 import { CITIES, PROS } from "@/lib/data";
 import { BubbleCard } from "@/components/BubbleCard";
@@ -12,9 +12,14 @@ import { getStaticSeoLongformContent } from "@/lib/seoLongformContent";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export default function FindAProClient() {
-  const searchParams = useSearchParams();
-  const cityQuery = (searchParams.get("city") || "").trim();
-  const intentQuery = (searchParams.get("intent") || "").trim();
+  const [cityQuery, setCityQuery] = useState("");
+  const [intentQuery, setIntentQuery] = useState("buying");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCityQuery((params.get("city") || "").trim());
+    setIntentQuery((params.get("intent") || "buying").trim());
+  }, []);
 
   const normalizedCityQuery = cityQuery.toLowerCase();
   const matchedCity = CITIES.find((city) => {
@@ -67,7 +72,7 @@ export default function FindAProClient() {
               </p>
             </div>
             
-            <form className="max-w-lg space-y-4 bg-white/[0.03] p-5 rounded-2xl border border-white/[0.08] backdrop-blur-sm" method="GET" action="/find-a-pro">
+            <form className="max-w-lg space-y-4 bg-white/[0.03] p-5 rounded-2xl border border-white/[0.08] backdrop-blur-sm" method="GET" action="/find-a-pro/">
               <div className="space-y-2">
                 <label htmlFor="city-input" className="block text-xs font-bold uppercase tracking-wider text-brand-accent">
                   Target City or State
@@ -76,7 +81,8 @@ export default function FindAProClient() {
                   <input
                     id="city-input"
                     name="city"
-                    defaultValue={cityQuery}
+                    value={cityQuery}
+                    onChange={(e) => setCityQuery(e.target.value)}
                     placeholder="e.g. new-york-ny"
                     className="w-full rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 text-sm text-brand-text placeholder:text-brand-text/60 focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
                   />
@@ -93,7 +99,8 @@ export default function FindAProClient() {
                 <select
                   id="intent-input"
                   name="intent"
-                  defaultValue={intentQuery || "buying"}
+                  value={intentQuery}
+                  onChange={(e) => setIntentQuery(e.target.value)}
                   className="w-full rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 text-sm text-brand-text [color-scheme:dark] focus:outline-none focus:ring-2 focus:ring-[#C78B5E]/40"
                 >
                   <option value="buying">Buying a home</option>

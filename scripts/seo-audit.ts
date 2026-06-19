@@ -78,47 +78,41 @@ function auditAdsTxt() {
 // 2. Audit Sitemap Index & Partitions
 async function auditSitemaps() {
   try {
-    const { generateSitemaps, default: sitemap } = await import("../app/sitemap.mock");
-    const partitions = await generateSitemaps();
+    const { default: sitemap } = await import("../app/sitemap.mock");
+    const urls = await sitemap();
 
-    let totalUrls = 0;
-    for (const part of partitions) {
-      const urls = await sitemap({ id: part.id });
-      totalUrls += urls.length;
+    if (urls.length > 50000) {
+      addIssue(
+        "sitemap URL count",
+        `/sitemap.xml`,
+        "Sitemap size is over the Google 50,000 limit. Split into smaller sitemaps.",
+        `Count: ${urls.length}`
+      );
+    }
 
-      if (urls.length > 50000) {
+    urls.forEach((entry: any) => {
+      if (!entry.url.startsWith(BASE_URL)) {
         addIssue(
-          "sitemap URL count",
-          `/sitemap/${part.id}.xml`,
-          "Partition sitemap size is over the Google 50,000 limit. Split into smaller partitioned chunks.",
-          `Count: ${urls.length}`
+          "sitemap canonical consistency",
+          entry.url,
+          `All sitemap URLs must be absolute and start with the production BASE_URL: "${BASE_URL}"`
         );
       }
-
-      urls.forEach((entry: any) => {
-        if (!entry.url.startsWith(BASE_URL)) {
-          addIssue(
-            "sitemap canonical consistency",
-            entry.url,
-            `All sitemap URLs must be absolute and start with the production BASE_URL: "${BASE_URL}"`
-          );
-        }
-        if (!entry.url.endsWith(".xml") && !entry.url.endsWith("/")) {
-          addIssue(
-            "sitemap canonical consistency",
-            entry.url,
-            "Ensure sitemap URLs systematically end with trailing slashes."
-          );
-        }
-        if (entry.url.includes("/thanks/")) {
-          addIssue(
-            "sitemap canonical consistency",
-            entry.url,
-            "Utility confirmation pages (e.g. /thanks/) should not be included in the sitemap index."
-          );
-        }
-      });
-    }
+      if (!entry.url.endsWith(".xml") && !entry.url.endsWith("/")) {
+        addIssue(
+          "sitemap canonical consistency",
+          entry.url,
+          "Ensure sitemap URLs systematically end with trailing slashes."
+        );
+      }
+      if (entry.url.includes("/thanks/")) {
+        addIssue(
+          "sitemap canonical consistency",
+          entry.url,
+          "Utility confirmation pages (e.g. /thanks/) should not be included in the sitemap."
+        );
+      }
+    });
   } catch (err: any) {
     addIssue("sitemap compilation error", "/sitemap.xml", "Verify sitemap.ts compile status and path definitions.", err.message);
   }

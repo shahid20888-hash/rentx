@@ -24,8 +24,7 @@ type BuildMetadataArgs = {
 
 function clampTitle(rawTitle?: string) {
   if (!rawTitle) return undefined;
-  const maxTitleLength = 50;
-  return rawTitle.length <= maxTitleLength ? rawTitle : `${rawTitle.slice(0, maxTitleLength - 1).trim()}…`;
+  return rawTitle.trim();
 }
 
 function normalizeDescription(description: string, path: string) {
