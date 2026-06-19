@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Invalid JSON body." }, { status: 400 });
     }
 
-    const { name, email, message } = body;
+    const { name, email, subject, message } = body;
 
     // 2. Validation
     if (!name || typeof name !== "string" || name.trim() === "") {
@@ -34,6 +34,13 @@ export async function POST(request: Request) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
       return NextResponse.json({ success: false, error: "Please provide a valid email address." }, { status: 400 });
+    }
+
+    if (!subject || typeof subject !== "string" || subject.trim() === "") {
+      return NextResponse.json({ success: false, error: "Subject is required." }, { status: 400 });
+    }
+    if (subject.length > 200) {
+      return NextResponse.json({ success: false, error: "Subject must be 200 characters or less." }, { status: 400 });
     }
 
     if (!message || typeof message !== "string" || message.trim() === "") {
@@ -73,6 +80,7 @@ Page URL: ${pageUrl}
 ----------------------------------------
 Name: ${name.trim()}
 Email: ${email.trim()}
+Subject: ${subject.trim()}
 Message:
 ${message.trim()}
 ----------------------------------------
@@ -113,6 +121,10 @@ ${message.trim()}
         <td class="label">Email:</td>
         <td><a href="mailto:${email.trim()}">${email.trim()}</a></td>
       </tr>
+      <tr>
+        <td class="label">Subject:</td>
+        <td>${subject.trim()}</td>
+      </tr>
     </table>
     
     <p><strong>Message:</strong></p>
@@ -139,7 +151,7 @@ ${message.trim()}
         to: [contactToEmail],
         reply_to: email.trim(),
         replyTo: email.trim(),
-        subject: "New RentX Contact Form Submission",
+        subject: `RentX: ${subject.trim()}`,
         text: textContent,
         html: htmlContent,
       }),

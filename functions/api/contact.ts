@@ -35,7 +35,7 @@ export const onRequestPost = async (context: {
       );
     }
 
-    const { name, email, message } = body;
+    const { name, email, subject, message } = body;
 
     // 3. Validation
     if (!name || typeof name !== "string" || name.trim() === "") {
@@ -61,6 +61,19 @@ export const onRequestPost = async (context: {
     if (!emailRegex.test(email.trim())) {
       return new Response(
         JSON.stringify({ success: false, error: "Please provide a valid email address." }),
+        { status: 400, headers: responseHeaders }
+      );
+    }
+
+    if (!subject || typeof subject !== "string" || subject.trim() === "") {
+      return new Response(
+        JSON.stringify({ success: false, error: "Subject is required." }),
+        { status: 400, headers: responseHeaders }
+      );
+    }
+    if (subject.length > 200) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Subject must be 200 characters or less." }),
         { status: 400, headers: responseHeaders }
       );
     }
@@ -114,6 +127,7 @@ Page URL: ${pageUrl}
 ----------------------------------------
 Name: ${name.trim()}
 Email: ${email.trim()}
+Subject: ${subject.trim()}
 Message:
 ${message.trim()}
 ----------------------------------------
@@ -154,6 +168,10 @@ ${message.trim()}
         <td class="label">Email:</td>
         <td><a href="mailto:${email.trim()}">${email.trim()}</a></td>
       </tr>
+      <tr>
+        <td class="label">Subject:</td>
+        <td>${subject.trim()}</td>
+      </tr>
     </table>
     
     <p><strong>Message:</strong></p>
@@ -180,7 +198,7 @@ ${message.trim()}
         to: [contactToEmail],
         reply_to: email.trim(),
         replyTo: email.trim(),
-        subject: "New RentX Contact Form Submission",
+        subject: `RentX: ${subject.trim()}`,
         text: textContent,
         html: htmlContent,
       }),
