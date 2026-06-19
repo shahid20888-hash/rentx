@@ -64,92 +64,72 @@ function getQualityComparePairs() {
   return pairs;
 }
 
-const SITEMAP_MAX_SIZE = 40000; // conservative scaling limit (well under 50,000)
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Core Content Sitemaps
+  const staticEntries: MetadataRoute.Sitemap = [
+    buildEntry("/", { changeFrequency: "daily", priority: 1 }),
+    buildEntry("/states/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/cities/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/guides/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/insights/", { changeFrequency: "weekly", priority: 0.9 }),
+    buildEntry("/compare/", { changeFrequency: "weekly", priority: 0.8 }),
+    buildEntry("/find-a-pro/", { changeFrequency: "weekly", priority: 0.7 }),
+    buildEntry("/about/", { changeFrequency: "monthly", priority: 0.5 }),
+    buildEntry("/contact/", { changeFrequency: "monthly", priority: 0.4 }),
+    buildEntry("/privacy-policy/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/terms/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/disclaimer/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/editorial-policy/", { changeFrequency: "monthly", priority: 0.4 }),
+    buildEntry("/cookie-policy/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/dmca/", { changeFrequency: "yearly", priority: 0.2 }),
+    buildEntry("/advertising-disclosure/", { changeFrequency: "yearly", priority: 0.2 })
+  ];
 
-// 2. Next.js Sitemap Partitioning Support
-export async function generateSitemaps() {
-  const comparePairsCount = getQualityComparePairs().length;
-  const numCompareSitemaps = Math.ceil(comparePairsCount / SITEMAP_MAX_SIZE);
-  
-  const sitemaps = [{ id: 0 }]; // id 0 is for core content (static, states, cities, guides, insights)
-  for (let i = 0; i < numCompareSitemaps; i++) {
-    sitemaps.push({ id: i + 1 });
-  }
-  return sitemaps;
-}
+  const stateEntries = getStates().map((state) =>
+    buildEntry(`/state/${state.slug}/`, {
+      changeFrequency: "weekly",
+      priority: 0.8
+    })
+  );
 
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
-  const numericId = Number(id);
-  if (numericId === 0) {
-    // Partition 0: Core Content Sitemaps
-    const staticEntries: MetadataRoute.Sitemap = [
-      buildEntry("/", { changeFrequency: "daily", priority: 1 }),
-      buildEntry("/states/", { changeFrequency: "weekly", priority: 0.9 }),
-      buildEntry("/cities/", { changeFrequency: "weekly", priority: 0.9 }),
-      buildEntry("/guides/", { changeFrequency: "weekly", priority: 0.9 }),
-      buildEntry("/insights/", { changeFrequency: "weekly", priority: 0.9 }),
-      buildEntry("/compare/", { changeFrequency: "weekly", priority: 0.8 }),
-      buildEntry("/find-a-pro/", { changeFrequency: "weekly", priority: 0.7 }),
-      buildEntry("/about/", { changeFrequency: "monthly", priority: 0.5 }),
-      buildEntry("/contact/", { changeFrequency: "monthly", priority: 0.4 }),
-      buildEntry("/privacy-policy/", { changeFrequency: "yearly", priority: 0.2 }),
-      buildEntry("/terms/", { changeFrequency: "yearly", priority: 0.2 }),
-      buildEntry("/disclaimer/", { changeFrequency: "yearly", priority: 0.2 }),
-      buildEntry("/editorial-policy/", { changeFrequency: "monthly", priority: 0.4 }),
-      buildEntry("/cookie-policy/", { changeFrequency: "yearly", priority: 0.2 }),
-      buildEntry("/dmca/", { changeFrequency: "yearly", priority: 0.2 }),
-      buildEntry("/advertising-disclosure/", { changeFrequency: "yearly", priority: 0.2 })
-    ];
+  const cityEntries = getCities().map((city) =>
+    buildEntry(`/city/${city.slug}/`, {
+      changeFrequency: "weekly",
+      priority: 0.8
+    })
+  );
 
-    const stateEntries = getStates().map((state) =>
-      buildEntry(`/state/${state.slug}/`, {
-        changeFrequency: "weekly",
-        priority: 0.8
-      })
-    );
+  const guideEntries = GUIDES.map((guide) =>
+    buildEntry(`/guides/${guide.slug}/`, {
+      lastModified: resolveArticleDate(guide.meta.updatedAt, guide.meta.publishedAt, guide.meta.date),
+      changeFrequency: "monthly",
+      priority: 0.85
+    })
+  );
 
-    const cityEntries = getCities().map((city) =>
-      buildEntry(`/city/${city.slug}/`, {
-        changeFrequency: "weekly",
-        priority: 0.8
-      })
-    );
+  const insightEntries = INSIGHTS.map((insight) =>
+    buildEntry(`/insights/${insight.slug}/`, {
+      lastModified: resolveArticleDate(insight.meta.updatedAt, insight.meta.publishedAt, insight.meta.date),
+      changeFrequency: "monthly",
+      priority: 0.85
+    })
+  );
 
-    const guideEntries = GUIDES.map((guide) =>
-      buildEntry(`/guides/${guide.slug}/`, {
-        lastModified: resolveArticleDate(guide.meta.updatedAt, guide.meta.publishedAt, guide.meta.date),
-        changeFrequency: "monthly",
-        priority: 0.85
-      })
-    );
+  // Compare Content (All Compare Pages)
+  const comparePairs = getQualityComparePairs();
+  const compareEntries = comparePairs.map((pair) =>
+    buildEntry(`/compare/${pair.citySlug}-vs-${pair.otherSlug}/`, {
+      changeFrequency: "weekly",
+      priority: 0.6
+    })
+  );
 
-    const insightEntries = INSIGHTS.map((insight) =>
-      buildEntry(`/insights/${insight.slug}/`, {
-        lastModified: resolveArticleDate(insight.meta.updatedAt, insight.meta.publishedAt, insight.meta.date),
-        changeFrequency: "monthly",
-        priority: 0.85
-      })
-    );
-
-    return [
-      ...staticEntries,
-      ...stateEntries,
-      ...cityEntries,
-      ...guideEntries,
-      ...insightEntries
-    ];
-  } else {
-    // Partition 1+: Compare Pages Sitemaps
-    const comparePairs = getQualityComparePairs();
-    const startIndex = (numericId - 1) * SITEMAP_MAX_SIZE;
-    const endIndex = startIndex + SITEMAP_MAX_SIZE;
-    const chunk = comparePairs.slice(startIndex, endIndex);
-
-    return chunk.map((pair) =>
-      buildEntry(`/compare/${pair.citySlug}-vs-${pair.otherSlug}/`, {
-        changeFrequency: "weekly",
-        priority: 0.6
-      })
-    );
-  }
+  return [
+    ...staticEntries,
+    ...stateEntries,
+    ...cityEntries,
+    ...guideEntries,
+    ...insightEntries,
+    ...compareEntries
+  ];
 }
