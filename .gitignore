@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 .DS_Store
 Thumbs.db
+
+# Wrangler and Cloudflare local files
+.wrangler/
+.dev.vars
